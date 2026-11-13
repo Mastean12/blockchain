@@ -1,0 +1,24 @@
+symbol,wfdb_description,count,decision_type,class_or_exclusion_reason,approval_status
+!,Ventricular flutter wave,472,approved_exclusion,"Rhythm/event annotation, not a classified heartbeat.",research_lead_approved
+"""",Comment annotation,437,approved_exclusion,"Comment metadata, not a classified heartbeat.",research_lead_approved
++,Rhythm change,1291,approved_exclusion,"Rhythm metadata, not a classified heartbeat.",research_lead_approved
+/,Paced beat,7028,approved_map,Q,research_lead_approved
+A,Atrial premature contraction,2546,approved_map,S,research_lead_approved
+E,Ventricular escape beat,106,approved_map,V,research_lead_approved
+F,Fusion of ventricular and normal beat,803,approved_map,F,research_lead_approved
+J,Nodal (junctional) premature beat,83,approved_map,S,research_lead_approved
+L,Left bundle branch block beat,8075,approved_map,N,research_lead_approved
+N,Normal beat,75052,approved_map,N,research_lead_approved
+Q,Unclassifiable beat,33,approved_map,Q,research_lead_approved
+R,Right bundle branch block beat,7259,approved_map,N,research_lead_approved
+S,Premature or ectopic supraventricular beat,2,approved_map,S,research_lead_approved
+V,Premature ventricular contraction,7130,approved_map,V,research_lead_approved
+[,Start of ventricular flutter/fibrillation,6,approved_exclusion,"Rhythm-segment boundary, not a classified heartbeat.",research_lead_approved
+],End of ventricular flutter/fibrillation,6,approved_exclusion,"Rhythm-segment boundary, not a classified heartbeat.",research_lead_approved
+a,Aberrated atrial premature beat,150,approved_map,S,research_lead_approved
+e,Atrial escape beat,16,approved_map,N,research_lead_approved
+f,Fusion of paced and normal beat,982,approved_map,Q,research_lead_approved
+j,Nodal (junctional) escape beat,229,approved_map,N,research_lead_approved
+x,Non-conducted P-wave (blocked APB),193,approved_exclusion,Approved exclusion because it marks a non-conducted event rather than a QRS heartbeat.,research_lead_approved
+|,Isolated QRS-like artifact,132,approved_exclusion,"Artifact annotation, not an expert beat-class label.",research_lead_approved
+~,Signal quality change,616,approved_exclusion,"Signal-quality metadata, not a classified heartbeat.",research_lead_approved

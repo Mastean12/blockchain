@@ -1,0 +1,71 @@
+version: 1
+status: research_lead_approved
+dataset: MIT-BIH Arrhythmia Database
+dataset_version: 1.0.0
+annotation_extension: atr
+class_order:
+  - N
+  - S
+  - V
+  - F
+  - Q
+classes:
+  N:
+    - N
+    - L
+    - R
+    - e
+    - j
+  S:
+    - A
+    - a
+    - J
+    - S
+  V:
+    - V
+    - E
+  F:
+    - F
+  Q:
+    - /
+    - f
+    - Q
+exclusions:
+  "!":
+    description: Ventricular flutter wave
+    reason: Rhythm/event annotation, not a classified heartbeat.
+  '"':
+    description: Comment annotation
+    reason: Comment metadata, not a classified heartbeat.
+  "+":
+    description: Rhythm change
+    reason: Rhythm metadata, not a classified heartbeat.
+  "[":
+    description: Start of ventricular flutter/fibrillation
+    reason: Rhythm-segment boundary, not a classified heartbeat.
+  "]":
+    description: End of ventricular flutter/fibrillation
+    reason: Rhythm-segment boundary, not a classified heartbeat.
+  x:
+    description: Non-conducted P-wave (blocked APB)
+    reason: Approved exclusion because it marks a non-conducted event rather than a QRS heartbeat.
+  "|":
+    description: Isolated QRS-like artifact
+    reason: Artifact annotation, not an expert beat-class label.
+  "~":
+    description: Signal quality change
+    reason: Signal-quality metadata, not a classified heartbeat.
+record_exclusions:
+  "102":
+    reason: Paced record excluded to follow the 44 non-pacemaker-record protocol in de Chazal et al. (2004).
+  "104":
+    reason: Paced record excluded to follow the 44 non-pacemaker-record protocol in de Chazal et al. (2004).
+  "107":
+    reason: Paced record excluded to follow the 44 non-pacemaker-record protocol in de Chazal et al. (2004).
+  "217":
+    reason: Paced record excluded to follow the 44 non-pacemaker-record protocol in de Chazal et al. (2004).
+sources:
+  - https://physionet.org/physiobank/database/html/mitdbdir/intro.htm
+  - https://physionet.org/physiotools/wag/annot-5.htm
+  - https://doi.org/10.1109/TBME.2004.827359
+  - https://doi.org/10.3390/s23062993

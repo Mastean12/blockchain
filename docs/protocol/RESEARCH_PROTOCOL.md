@@ -25,10 +25,10 @@ These are adopted verbatim from the master specification and are fixed for the s
 
 - **Primary dataset:** MIT-BIH Arrhythmia Database, exact release and file checksums to be recorded before use.
 - **External evaluation:** SVDB is out of the primary training protocol. If separately approved, evaluate a checkpoint selected using MIT-BIH validation only; describe it as external evaluation, not multi-dataset federated training.
-- **Task:** Candidate AAMI-derived N/S/V/F/Q heartbeat classification. The candidate mapping in the master specification is not final until the annotation audit, selected protocol review, and research-lead approval are complete.
-- **Data handling:** Raw data remain immutable and separate from processed data. No data are to be downloaded or transformed under this Phase 1 draft.
+- **Task:** AAMI-derived N/S/V/F/Q heartbeat classification using the approved mapping and the 44 non-pacemaker-record protocol described by [de Chazal et al. (2004)](https://doi.org/10.1109/TBME.2004.827359). Exclude records 102, 104, 107 and 217 before any split or training. The audited mapping assigns `/` and `f` to Q, but those symbols have no observations in the included records; Q support is 15 annotations across 5 records.
+- **Data handling:** Raw data remain immutable and separate from processed data. Phase 2 acquisition and audit are complete; no processed data or model training has begun.
 - **Records 201/202:** Keep grouped because they originate from the same subject. Other patient identity assumptions must be documented; do not claim verified patient independence without evidence.
-- **Exclusions, paced-record handling, beat windows and annotation interpretation:** remain open until Phase 2 review and approval. No unknown symbol may be silently mapped or discarded.
+- **Annotation mapping, symbol exclusions, paced-record handling and Q policy:** approved at G2 on 13 November 2026. Beat-window and preprocessing choices remain open for Phase 3. No unknown symbol may be silently mapped or discarded.
 - **EC57 access:** The full licensed standard was not provided or accessed in this workspace. The research lead approved this protocol with that limitation recorded. Do not make clause-level or compliance claims; any later decision relying on EC57 clauses requires source review.
 
 ## 4. Evaluation design
@@ -129,20 +129,19 @@ The research lead approved this Phase 1 protocol and selected the following desi
 The following decisions remain open for their applicable later gates:
 
 1. any EC57 clause-specific decisions, if the full licensed text becomes available;
-2. exact AAMI mapping, unknown-symbol exclusions, paced-record handling and Q-class policy (Phase 2);
-3. split unit, record lists, grouping rules beyond the known 201/202 pair, whole-record client allocation algorithm, and client distribution (Phases 2–3);
-4. training budgets, stopping rule and complete configuration, to be frozen using validation data only;
-5. DP privacy unit, adjacency, accountant and predeclared budget/noise sweep;
-6. HE parameter set, key ownership and decryption location;
-7. robust aggregation baseline set, attacker capabilities and attacker budget;
-8. whether to execute SVDB external evaluation, after primary MIT-BIH evaluation is frozen.
+2. training budgets, stopping rule and complete configuration, to be frozen using validation data only;
+3. DP privacy unit, adjacency, accountant and predeclared budget/noise sweep;
+4. HE parameter set, key ownership and decryption location;
+5. robust aggregation baseline set, attacker capabilities and attacker budget;
+6. whether to execute SVDB external evaluation, after primary MIT-BIH evaluation is frozen.
 
-No experiment requiring these decisions may proceed until they are resolved at the applicable gate. Phase 1 approval alone does not authorize dataset download or processing; Phase 2 must follow the master specification. No training is authorized before taxonomy and data gates pass.
+No experiment requiring these decisions may proceed until they are resolved at the applicable gate. Phase 2 acquisition and taxonomy gates have passed. No training is authorized before the Phase 3 split and preprocessing gate passes.
 
 ## 10. Approval record
 
 - Research lead: approved by explicit chat confirmation on 13 November 2026
 - Research-lead selections recorded: five clients, FedProx, macro-F1 checkpoint selection, hash-chain plus local Ganache plan, optional SVDB external evaluation
+- Phase 2/G2 approval: approved mapping and exclusions; use the 44 non-pacemaker-record protocol and exclude records 102, 104, 107 and 217; Q support is 15 annotations across 5 records.
 - Protocol version approved: 1.0
 - Approval date: 13 November 2026
 - Deviations/amendments: approval accepts the disclosed source-access limits; no detailed claims are made about inaccessible full texts
