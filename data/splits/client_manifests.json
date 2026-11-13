@@ -1,0 +1,152 @@
+{
+  "assignment_policy": "Five clients receive training record groups only, using deterministic greedy balancing of mapped class counts and record load.",
+  "client_manifest_code_version": "1.0.0",
+  "clients": [
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 378,
+        "N": 11139,
+        "Q": 2,
+        "S": 337,
+        "V": 1040
+      },
+      "client_id": "client_01",
+      "group_ids": [
+        "record:117",
+        "record:124",
+        "record:208",
+        "record:220",
+        "record:222",
+        "record:230"
+      ],
+      "record_count": 6,
+      "record_ids": [
+        "117",
+        "124",
+        "208",
+        "220",
+        "222",
+        "230"
+      ]
+    },
+    {
+      "absent_classes": [
+        "Q"
+      ],
+      "class_counts": {
+        "F": 364,
+        "N": 11678,
+        "Q": 0,
+        "S": 68,
+        "V": 1520
+      },
+      "client_id": "client_02",
+      "group_ids": [
+        "record:113",
+        "record:116",
+        "record:123",
+        "record:200",
+        "record:213",
+        "record:228"
+      ],
+      "record_count": 6,
+      "record_ids": [
+        "113",
+        "116",
+        "123",
+        "200",
+        "213",
+        "228"
+      ]
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 22,
+        "N": 13186,
+        "Q": 5,
+        "S": 118,
+        "V": 1155
+      },
+      "client_id": "client_03",
+      "group_ids": [
+        "record:105",
+        "record:205",
+        "record:207",
+        "record:212",
+        "record:231",
+        "record:233"
+      ],
+      "record_count": 6,
+      "record_ids": [
+        "105",
+        "205",
+        "207",
+        "212",
+        "231",
+        "233"
+      ]
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 22,
+        "N": 14743,
+        "Q": 4,
+        "S": 320,
+        "V": 1180
+      },
+      "client_id": "client_04",
+      "group_ids": [
+        "record:114",
+        "record:115",
+        "record:203",
+        "record:223",
+        "record:234",
+        "subject:201-202"
+      ],
+      "record_count": 7,
+      "record_ids": [
+        "114",
+        "115",
+        "201",
+        "202",
+        "203",
+        "223",
+        "234"
+      ]
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 3,
+        "N": 13269,
+        "Q": 2,
+        "S": 394,
+        "V": 1006
+      },
+      "client_id": "client_05",
+      "group_ids": [
+        "record:106",
+        "record:121",
+        "record:209",
+        "record:214",
+        "record:215",
+        "record:219"
+      ],
+      "record_count": 6,
+      "record_ids": [
+        "106",
+        "121",
+        "209",
+        "214",
+        "215",
+        "219"
+      ]
+    }
+  ],
+  "manifest_sha256": "71dbcac37e2a605d5edcd0ce280acec60068a1f1defb4f403bc32a5e1cb8eba3",
+  "parent_split_manifest_sha256": "bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96",
+  "schema_version": 1
+}

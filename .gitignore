@@ -14,6 +14,7 @@ __pycache__/
 # Data and large artifacts
 raw-data/
 data/raw/
+data/processed/
 *.zip
 *.tar
 *.tar.gz
@@ -24,7 +25,7 @@ data/raw/
 *.pkl
 *.npy
 
-# Auditable Phase 2 reports (raw data remains ignored)
+# Auditable reports (raw and processed arrays remain ignored)
 !docs/data_and_labels/MITBIH_v1.0.0_SHA256SUMS.csv
 !docs/data_and_labels/MITBIH_RAW_ANNOTATION_INVENTORY.csv
 !docs/data_and_labels/MITBIH_PER_RECORD_AAMI_COUNTS.csv

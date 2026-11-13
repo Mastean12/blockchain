@@ -1,0 +1,362 @@
+{
+  "checksum_manifest_sha256": "01475af50c75514541495cde522b4c7ef2374d001e04f96c031e560924e5545d",
+  "class_order": [
+    "N",
+    "S",
+    "V",
+    "F",
+    "Q"
+  ],
+  "dataset": "MIT-BIH Arrhythmia Database",
+  "dataset_version": "1.0.0",
+  "excluded_records": {
+    "102": "Paced record excluded to follow the 44 non-pacemaker-record protocol in de Chazal et al. (2004).",
+    "104": "Paced record excluded to follow the 44 non-pacemaker-record protocol in de Chazal et al. (2004).",
+    "107": "Paced record excluded to follow the 44 non-pacemaker-record protocol in de Chazal et al. (2004).",
+    "217": "Paced record excluded to follow the 44 non-pacemaker-record protocol in de Chazal et al. (2004)."
+  },
+  "grouping_rule": "Records 201 and 202 form one group; every other eligible record is a separate group. No patient identity is inferred for other records.",
+  "manifest_sha256": "bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96",
+  "mapping_config_sha256": "ab41e2982dd83f73906cf98ae6b89cea7addf9dd34ed8ef8d7a0605cb957e0c4",
+  "mapping_status": "research_lead_approved",
+  "mapping_version": 1,
+  "phase3_split_code_version": "1.0.0",
+  "raw_archive_sha256": "47b26926927c11bd9174154d367c811afc1b186f650f8a205931ca8c520f0a87",
+  "record_assignments": {
+    "100": "validation",
+    "101": "test",
+    "103": "validation",
+    "105": "train",
+    "106": "train",
+    "108": "validation",
+    "109": "validation",
+    "111": "test",
+    "112": "test",
+    "113": "train",
+    "114": "train",
+    "115": "train",
+    "116": "train",
+    "117": "train",
+    "118": "test",
+    "119": "test",
+    "121": "train",
+    "122": "test",
+    "123": "train",
+    "124": "train",
+    "200": "train",
+    "201": "train",
+    "202": "train",
+    "203": "train",
+    "205": "train",
+    "207": "train",
+    "208": "train",
+    "209": "train",
+    "210": "validation",
+    "212": "train",
+    "213": "train",
+    "214": "train",
+    "215": "train",
+    "219": "train",
+    "220": "train",
+    "221": "validation",
+    "222": "train",
+    "223": "train",
+    "228": "train",
+    "230": "train",
+    "231": "train",
+    "232": "test",
+    "233": "train",
+    "234": "train"
+  },
+  "record_group_mapping": {
+    "record:100": [
+      "100"
+    ],
+    "record:101": [
+      "101"
+    ],
+    "record:103": [
+      "103"
+    ],
+    "record:105": [
+      "105"
+    ],
+    "record:106": [
+      "106"
+    ],
+    "record:108": [
+      "108"
+    ],
+    "record:109": [
+      "109"
+    ],
+    "record:111": [
+      "111"
+    ],
+    "record:112": [
+      "112"
+    ],
+    "record:113": [
+      "113"
+    ],
+    "record:114": [
+      "114"
+    ],
+    "record:115": [
+      "115"
+    ],
+    "record:116": [
+      "116"
+    ],
+    "record:117": [
+      "117"
+    ],
+    "record:118": [
+      "118"
+    ],
+    "record:119": [
+      "119"
+    ],
+    "record:121": [
+      "121"
+    ],
+    "record:122": [
+      "122"
+    ],
+    "record:123": [
+      "123"
+    ],
+    "record:124": [
+      "124"
+    ],
+    "record:200": [
+      "200"
+    ],
+    "record:203": [
+      "203"
+    ],
+    "record:205": [
+      "205"
+    ],
+    "record:207": [
+      "207"
+    ],
+    "record:208": [
+      "208"
+    ],
+    "record:209": [
+      "209"
+    ],
+    "record:210": [
+      "210"
+    ],
+    "record:212": [
+      "212"
+    ],
+    "record:213": [
+      "213"
+    ],
+    "record:214": [
+      "214"
+    ],
+    "record:215": [
+      "215"
+    ],
+    "record:219": [
+      "219"
+    ],
+    "record:220": [
+      "220"
+    ],
+    "record:221": [
+      "221"
+    ],
+    "record:222": [
+      "222"
+    ],
+    "record:223": [
+      "223"
+    ],
+    "record:228": [
+      "228"
+    ],
+    "record:230": [
+      "230"
+    ],
+    "record:231": [
+      "231"
+    ],
+    "record:232": [
+      "232"
+    ],
+    "record:233": [
+      "233"
+    ],
+    "record:234": [
+      "234"
+    ],
+    "subject:201-202": [
+      "201",
+      "202"
+    ]
+  },
+  "schema_version": 1,
+  "split_algorithm": "Seeded shuffle of record groups, then largest-remainder allocation to 70/15/15 group proportions; no metric-based retries.",
+  "split_group_counts": {
+    "test": 7,
+    "train": 30,
+    "validation": 6
+  },
+  "split_record_counts": {
+    "test": 7,
+    "train": 31,
+    "validation": 6
+  },
+  "split_seed": 42,
+  "splits": {
+    "test": {
+      "absent_classes": [
+        "F"
+      ],
+      "class_counts": {
+        "F": 0,
+        "N": 13103,
+        "Q": 2,
+        "S": 1483,
+        "V": 461
+      },
+      "group_count": 7,
+      "group_ids": [
+        "record:101",
+        "record:111",
+        "record:112",
+        "record:118",
+        "record:119",
+        "record:122",
+        "record:232"
+      ],
+      "record_count": 7,
+      "record_ids": [
+        "101",
+        "111",
+        "112",
+        "118",
+        "119",
+        "122",
+        "232"
+      ]
+    },
+    "train": {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 789,
+        "N": 64015,
+        "Q": 13,
+        "S": 1237,
+        "V": 5901
+      },
+      "group_count": 30,
+      "group_ids": [
+        "record:105",
+        "record:106",
+        "record:113",
+        "record:114",
+        "record:115",
+        "record:116",
+        "record:117",
+        "record:121",
+        "record:123",
+        "record:124",
+        "record:200",
+        "subject:201-202",
+        "record:203",
+        "record:205",
+        "record:207",
+        "record:208",
+        "record:209",
+        "record:212",
+        "record:213",
+        "record:214",
+        "record:215",
+        "record:219",
+        "record:220",
+        "record:222",
+        "record:223",
+        "record:228",
+        "record:230",
+        "record:231",
+        "record:233",
+        "record:234"
+      ],
+      "record_count": 31,
+      "record_ids": [
+        "105",
+        "106",
+        "113",
+        "114",
+        "115",
+        "116",
+        "117",
+        "121",
+        "123",
+        "124",
+        "200",
+        "201",
+        "202",
+        "203",
+        "205",
+        "207",
+        "208",
+        "209",
+        "212",
+        "213",
+        "214",
+        "215",
+        "219",
+        "220",
+        "222",
+        "223",
+        "228",
+        "230",
+        "231",
+        "233",
+        "234"
+      ]
+    },
+    "validation": {
+      "absent_classes": [
+        "Q"
+      ],
+      "class_counts": {
+        "F": 14,
+        "N": 13007,
+        "Q": 0,
+        "S": 61,
+        "V": 647
+      },
+      "group_count": 6,
+      "group_ids": [
+        "record:100",
+        "record:103",
+        "record:108",
+        "record:109",
+        "record:210",
+        "record:221"
+      ],
+      "record_count": 6,
+      "record_ids": [
+        "100",
+        "103",
+        "108",
+        "109",
+        "210",
+        "221"
+      ]
+    }
+  },
+  "target_group_proportions": {
+    "test": 0.15,
+    "train": 0.7,
+    "validation": 0.15
+  }
+}

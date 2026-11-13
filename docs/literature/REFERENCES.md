@@ -46,3 +46,7 @@
 - Verify complete author metadata for any source whose publisher record was incomplete before final thesis citation.
 - Obtain full text for sources marked inaccessible and record the actual split, labels, preprocessing, metrics and threat model.
 - Expand the bibliography through a documented database search before describing the work as a systematic review.
+
+## Phase 3 preprocessing reference
+
+22. Kachuee, M., Fazeli, S., & Sarrafzadeh, M. (2018). ECG heartbeat classification: A deep transferable representation. *2018 IEEE International Conference on Healthcare Informatics (ICHI)*. [Conference DOI](https://doi.org/10.1109/ICHI.2018.00092) | [arXiv full text](https://arxiv.org/abs/1805.00794). Full text accessed. It describes Lead II preprocessing and adaptive beat extraction; the Phase 3 project uses a documented fixed-window/reference-annotation adaptation rather than reproducing that detector.

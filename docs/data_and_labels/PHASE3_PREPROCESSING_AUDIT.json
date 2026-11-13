@@ -1,0 +1,217 @@
+{
+  "dataset": "MIT-BIH Arrhythmia Database",
+  "dataset_version": "1.0.0",
+  "manifest_sha256": "5e363d0eb41747649d46442412dc2009fe93c5c220bb7e8a5d18003775d10025",
+  "mapping_config_sha256": "ab41e2982dd83f73906cf98ae6b89cea7addf9dd34ed8ef8d7a0605cb957e0c4",
+  "numpy_version": "2.5.4",
+  "policy": {
+    "augmentation_or_oversampling": "none",
+    "beat_locations": "reference .atr annotation sample positions",
+    "boundary_windows": "drop and count by approved class; never pad or wrap",
+    "filtering_and_baseline_removal": "none",
+    "interpretation": "Classification conditional on reference beat locations; this does not evaluate end-to-end beat detection.",
+    "lead": "MLII",
+    "normalization": {
+      "fit_split": "train only",
+      "mean": -0.2829528302450724,
+      "method": "global z-score over all training-window samples",
+      "standard_deviation": 0.48109470198424287
+    },
+    "resampling": "none; retain native 360 Hz",
+    "sampling_frequency_hz": 360,
+    "sampling_frequency_source": "record header; mismatch causes an explicit error",
+    "signal_quality_annotations": "The ~ symbol is non-beat metadata, not a class. Its count is reported; nearby beats are not automatically removed.",
+    "source_protocol": "Kachuee et al. (2018), https://doi.org/10.1109/ICHI.2018.00092; this project uses reference annotations and a fixed window rather than the paper's detector/adaptive-window procedure.",
+    "window_offsets_samples_inclusive": {
+      "after": 162,
+      "before": -90,
+      "window_size": 253
+    },
+    "window_offsets_seconds": {
+      "after": 0.45,
+      "before": 0.25
+    }
+  },
+  "preprocessing_code_version": "1.0.0",
+  "processed_artifact_sha256": {
+    "test_record_ids.npy": "597114a395f46fe49b98c1b6285a95b13aea9f0afd7412360ab91ed08ceac2ee",
+    "test_sample_positions.npy": "949012b57297eec106ca56f80ffec00caace93df70fac425d131044df9d824cc",
+    "test_symbols.npy": "1e5e108780aa4556586e6f874f35c7961a7931bd31cf6c987b814950b186f5fd",
+    "test_x.npy": "4cdbe57cc38fe68fa73b05d9289fce1746c8a045244ff5f74ca350dc6bdb2ea1",
+    "test_y.npy": "917214af98a018f44d9a7da19351c20c3fc6a9407694a53f103902e9a6deb351",
+    "train_record_ids.npy": "b91dbf3b4297087818436c9d947078b77916edcdd18dfec3dd2b67d1e84fb12f",
+    "train_sample_positions.npy": "3a29c173e2edf641b71eec6422971f0010c8626f27d3e0842f6ec68603f19233",
+    "train_symbols.npy": "e7abea61fce78ddd2b96c70a8bcc3499e83e63f44a76a20c202ad4632170643e",
+    "train_x.npy": "b56c9673e342e854a439f5363f23d6ab95877bdfacb7eac8ce2c4c6894ea94bd",
+    "train_y.npy": "acec6c8b19458e0db0067fadd94feaf4b9b983356b01084692df874caa67e200",
+    "validation_record_ids.npy": "20866cb00e15b68fd7c6d09b5dd20186c037ca16ac280b7b18a4651b335a9617",
+    "validation_sample_positions.npy": "4dd6c71325fa66182615dcad30cdcc0348de1f4dbf5d21e9211e0aff4634cf2b",
+    "validation_symbols.npy": "56536153f7480ebd0cd1a0ede294a01fa8dc59a9b5fa6e5e6ac20620a02efcf1",
+    "validation_x.npy": "00386c0a4ca95057ae2f6cf02ab17a191cef18afd280df32e191afb293a9129d",
+    "validation_y.npy": "3405555802bea20d59d6282289739e8397f7cdf217abf4e46d4b7fe2e49c1957"
+  },
+  "processed_artifacts": {
+    "test_record_ids": "data/processed/phase3/test_record_ids.npy",
+    "test_sample_positions": "data/processed/phase3/test_sample_positions.npy",
+    "test_symbols": "data/processed/phase3/test_symbols.npy",
+    "test_x": "data/processed/phase3/test_x.npy",
+    "test_y": "data/processed/phase3/test_y.npy",
+    "train_record_ids": "data/processed/phase3/train_record_ids.npy",
+    "train_sample_positions": "data/processed/phase3/train_sample_positions.npy",
+    "train_symbols": "data/processed/phase3/train_symbols.npy",
+    "train_x": "data/processed/phase3/train_x.npy",
+    "train_y": "data/processed/phase3/train_y.npy",
+    "validation_record_ids": "data/processed/phase3/validation_record_ids.npy",
+    "validation_sample_positions": "data/processed/phase3/validation_sample_positions.npy",
+    "validation_symbols": "data/processed/phase3/validation_symbols.npy",
+    "validation_x": "data/processed/phase3/validation_x.npy",
+    "validation_y": "data/processed/phase3/validation_y.npy"
+  },
+  "python_version": "3.12.10",
+  "schema_version": 1,
+  "split_details": {
+    "test": {
+      "array_shape": [
+        15045,
+        253
+      ],
+      "boundary_excluded_by_class": {
+        "F": 0,
+        "N": 4,
+        "Q": 0,
+        "S": 0,
+        "V": 0
+      },
+      "class_counts": {
+        "F": 0,
+        "N": 13099,
+        "Q": 2,
+        "S": 1483,
+        "V": 461
+      },
+      "dtype": "float32",
+      "excluded_symbol_counts": {
+        "+": 109,
+        "x": 10,
+        "|": 6,
+        "~": 73
+      },
+      "record_ids": [
+        "101",
+        "111",
+        "112",
+        "118",
+        "119",
+        "122",
+        "232"
+      ],
+      "signal_quality_marker_count": 73,
+      "window_count": 15045
+    },
+    "train": {
+      "array_shape": [
+        71927,
+        253
+      ],
+      "boundary_excluded_by_class": {
+        "F": 1,
+        "N": 26,
+        "Q": 0,
+        "S": 0,
+        "V": 1
+      },
+      "class_counts": {
+        "F": 788,
+        "N": 63989,
+        "Q": 13,
+        "S": 1237,
+        "V": 5900
+      },
+      "dtype": "float32",
+      "excluded_symbol_counts": {
+        "!": 472,
+        "\"": 437,
+        "+": 1020,
+        "[": 6,
+        "]": 6,
+        "x": 172,
+        "|": 116,
+        "~": 422
+      },
+      "record_ids": [
+        "105",
+        "106",
+        "113",
+        "114",
+        "115",
+        "116",
+        "117",
+        "121",
+        "123",
+        "124",
+        "200",
+        "201",
+        "202",
+        "203",
+        "205",
+        "207",
+        "208",
+        "209",
+        "212",
+        "213",
+        "214",
+        "215",
+        "219",
+        "220",
+        "222",
+        "223",
+        "228",
+        "230",
+        "231",
+        "233",
+        "234"
+      ],
+      "signal_quality_marker_count": 422,
+      "window_count": 71927
+    },
+    "validation": {
+      "array_shape": [
+        13722,
+        253
+      ],
+      "boundary_excluded_by_class": {
+        "F": 0,
+        "N": 7,
+        "Q": 0,
+        "S": 0,
+        "V": 0
+      },
+      "class_counts": {
+        "F": 14,
+        "N": 13000,
+        "Q": 0,
+        "S": 61,
+        "V": 647
+      },
+      "dtype": "float32",
+      "excluded_symbol_counts": {
+        "+": 44,
+        "x": 11,
+        "|": 9,
+        "~": 78
+      },
+      "record_ids": [
+        "100",
+        "103",
+        "108",
+        "109",
+        "210",
+        "221"
+      ],
+      "signal_quality_marker_count": 78,
+      "window_count": 13722
+    }
+  },
+  "split_manifest_sha256": "bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96",
+  "wfdb_version": "4.3.1"
+}

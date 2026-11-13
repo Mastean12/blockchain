@@ -2,7 +2,7 @@
 
 **Status:** MIT-BIH v1.0.0 acquired and audited; mapping and 44-record policy approved at G2  
 **Acquisition date:** 13 November 2026  
-**Raw-data policy:** Immutable source archive and extraction; no preprocessing or training performed
+**Raw-data policy:** Immutable source archive and extraction; Phase 3 processed windows are generated separately; no model training performed
 
 ## Dataset identity and source
 
@@ -34,7 +34,7 @@ The source listing did not provide a checksum used for this download. The projec
 .\.venv\Scripts\python.exe -m scripts.audit_mitdb_annotations
 ```
 
-Audit environment: Windows, Python 3.12.10, WFDB 4.3.1, NumPy 2.5.4, pandas 3.1.1, SciPy 1.18.1, and PyYAML 6.0.3. No signal preprocessing was performed.
+Audit environment: Windows, Python 3.12.10, WFDB 4.3.1, NumPy 2.5.4, pandas 3.1.1, SciPy 1.18.1, and PyYAML 6.0.3. No signal preprocessing was performed during the raw-data audit; Phase 3 preprocessing is documented separately.
 
 ## Dataset structure and verified records
 
@@ -62,4 +62,4 @@ The database was collected in 1975–1979 and deliberately includes records sele
 - Approved mapping and record exclusions: [aami5_mapping_v1.yaml](../../configs/data/aami5_mapping_v1.yaml)
 - Reproducible audit implementation: [audit_mitdb_annotations.py](../../scripts/audit_mitdb_annotations.py)
 
-No beat segmentation, preprocessing, split generation, model fitting or training has been performed.
+Phase 3 generated the split manifests and processed windows described in [SPLIT_POLICY.md](./SPLIT_POLICY.md). No model fitting or training has been performed.

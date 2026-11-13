@@ -26,7 +26,7 @@ These are adopted verbatim from the master specification and are fixed for the s
 - **Primary dataset:** MIT-BIH Arrhythmia Database, exact release and file checksums to be recorded before use.
 - **External evaluation:** SVDB is out of the primary training protocol. If separately approved, evaluate a checkpoint selected using MIT-BIH validation only; describe it as external evaluation, not multi-dataset federated training.
 - **Task:** AAMI-derived N/S/V/F/Q heartbeat classification using the approved mapping and the 44 non-pacemaker-record protocol described by [de Chazal et al. (2004)](https://doi.org/10.1109/TBME.2004.827359). Exclude records 102, 104, 107 and 217 before any split or training. The audited mapping assigns `/` and `f` to Q, but those symbols have no observations in the included records; Q support is 15 annotations across 5 records.
-- **Data handling:** Raw data remain immutable and separate from processed data. Phase 2 acquisition and audit are complete; no processed data or model training has begun.
+- **Data handling:** Raw data remain immutable and separate from processed data. Phase 2 acquisition/audit and Phase 3 splitting/preprocessing are complete; no model training has begun.
 - **Records 201/202:** Keep grouped because they originate from the same subject. Other patient identity assumptions must be documented; do not claim verified patient independence without evidence.
 - **Annotation mapping, symbol exclusions, paced-record handling and Q policy:** approved at G2 on 13 November 2026. Beat-window and preprocessing choices remain open for Phase 3. No unknown symbol may be silently mapped or discarded.
 - **EC57 access:** The full licensed standard was not provided or accessed in this workspace. The research lead approved this protocol with that limitation recorded. Do not make clause-level or compliance claims; any later decision relying on EC57 clauses requires source review.
@@ -59,7 +59,8 @@ This table defines the planned sequence, not authorization to execute it. Compon
 - Use record/group-level partitions; never split beats from one record across train, validation and test.
 - Assign whole records/groups to clients. Report each client’s record IDs, beat count, N/S/V/F/Q support and absent classes.
 - Compare IID-like, moderate non-IID, and severe non-IID distributions. Call a partition “IID-like,” not “IID,” if whole-record allocation cannot establish exact IID.
-- Use five client slots as the initial design, selected by the research lead. Whole-record assignment, client manifests and class distributions still depend on the approved taxonomy and record audit. Allocation algorithm, exact record lists, seeds and any Dirichlet concentration remain open. No beat-level distribution across clients is permitted.
+- The research lead approved a 70/15/15 group split with seed 42, grouping 201/202. The exact record lists and counts are frozen in [SPLIT_POLICY.md](../data_and_labels/SPLIT_POLICY.md) and its hashed manifest. No metric-based retries are permitted.
+- Use five client slots, selected by the research lead. Client manifests assign training groups only, using deterministic greedy class-count and record-load balancing. The manifests and per-client class distributions are frozen with the split. No beat-level distribution across clients is permitted.
 - The test set is excluded from fitting, tuning, threshold selection, checkpoint selection and client training.
 
 ### 4.3 Model and training controls
@@ -69,6 +70,16 @@ This table defines the planned sequence, not authorization to execute it. Compon
 - Validation data alone determine hyperparameters, early stopping and checkpoint selection. Macro-F1 is the research-lead-selected primary checkpoint-selection metric; its implementation and stopping rule must be frozen and tested before final test evaluation.
 - Preserve and report round-0 selection if it wins the predeclared validation rule; investigate rather than silently substitute another checkpoint.
 - Use at least five seeds if compute permits. If fewer are used, justify the constraint and report every seed. Multiple seeds on one split are not independent subject-level validation.
+
+### 4.4 Phase 3 preprocessing freeze
+
+- Use the `MLII` channel at the native 360 Hz sampling rate, checked from each record header.
+- Center 253-sample windows on the expert reference annotation, spanning offsets -90 through +162 samples (-0.25 to +0.45 seconds). Drop and count boundary windows.
+- Apply no resampling, filtering or baseline removal.
+- Fit one global z-score mean and standard deviation using training windows only, then apply those parameters unchanged to validation and test.
+- Treat `~` as signal-quality metadata; report it, but do not automatically discard neighboring beats.
+- No augmentation or oversampling is used in Phase 3.
+- This is a fixed-window adaptation of Kachuee et al. (2018), not a reproduction of their automatic detector/adaptive-window method. With reference annotations, the task is classification conditional on reference beat locations, not end-to-end detection.
 
 ## 5. Metrics and analysis
 
@@ -135,7 +146,7 @@ The following decisions remain open for their applicable later gates:
 5. robust aggregation baseline set, attacker capabilities and attacker budget;
 6. whether to execute SVDB external evaluation, after primary MIT-BIH evaluation is frozen.
 
-No experiment requiring these decisions may proceed until they are resolved at the applicable gate. Phase 2 acquisition and taxonomy gates have passed. No training is authorized before the Phase 3 split and preprocessing gate passes.
+No experiment requiring these decisions may proceed until it is resolved at the applicable gate. Phase 2 acquisition/taxonomy and Phase 3 split/preprocessing gates have passed. No model training has started; baseline experiments remain subject to the Phase 4 gate.
 
 ## 10. Approval record
 
