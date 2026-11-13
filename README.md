@@ -68,4 +68,9 @@ This boilerplate intentionally contains no training or dataset code. Structural 
 
 ## Current status
 
-Status: Phase 0 skeleton complete; Phase 1 and later research activities require approval per the master specification.
+Status: Phase 0 workspace gate complete. Phase 1 literature review and protocol are approved with documented source-access limitations. No dataset or training work has started.
+
+Phase 1 documents:
+- [Literature review](docs/literature/LITERATURE_REVIEW.md)
+- [Reference register](docs/literature/REFERENCES.md)
+- [Approved research protocol](docs/protocol/RESEARCH_PROTOCOL.md)
