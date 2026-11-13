@@ -1,0 +1,51 @@
+# Python cache and virtual environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Environment and secrets
+.env
+.env.*
+.secrets/
+
+# Data and large artifacts
+raw-data/
+data/raw/
+*.zip
+*.tar
+*.tar.gz
+*.h5
+*.hdf5
+*.parquet
+*.csv
+*.pkl
+*.npy
+
+# Generated and local artifacts
+checkpoints/
+wandb/
+mlruns/
+logs/
+models/
+experiments/logs/
+experiments/registry/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Google Colab / notebook artifacts
+.colab/
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Optional drive mounts used by notebooks
+content/
+drive/
+mydrive/
+gdrive/

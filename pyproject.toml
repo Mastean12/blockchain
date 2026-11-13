@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecg-federated-learning-study"
+version = "0.1.0"
+description = "Boilerplate for a blockchain-enabled privacy-preserving federated learning ECG project"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26.0",
+  "pandas>=2.2.0",
+  "scipy>=1.11.0",
+  "scikit-learn>=1.4.0",
+  "matplotlib>=3.8.0",
+  "pyyaml>=6.0.1",
+  "wfdb>=4.1.2",
+  "torch>=2.2.0",
+  "pytest>=8.0.0"
+]
+
+[project.optional-dependencies]
+research = [
+  "seaborn>=0.13.0",
+  "tensorboard>=2.16.0",
+  "jupyter>=1.0.0"
+]
+privacy = [
+  "opacus>=1.4.0",
+  "tenseal>=0.3.14"
+]
+blockchain = [
+  "web3>=6.0.0",
+  "ganache>=7.0.0"
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.setuptools]
+packages = ["src"]
