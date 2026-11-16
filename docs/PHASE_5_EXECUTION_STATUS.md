@@ -2,9 +2,9 @@
 
 **Last updated:** 16 November 2026  
 **Stage:** Stage B **complete for F1-F4** on the approved frozen partitions; F5 not run by the pre-declared conditional rule  
-**G4:** NOT PASSED (unchanged, not retrospectively revised)  
-**G5:** **evidence submitted, decision pending** - see `PHASE_5_RESULTS_AND_ANALYSIS.md` §10  
-**Phase 6:** not started
+**G4:** PASSED 16 November 2026 with documented defect (see PHASE_4_G4_RESOLUTION.md)  
+**G5:** **PASSED 16 November 2026** after the required explanatory ablation (A2) was run — see `PHASE_5_G5_DIAGNOSIS.md`  
+**Phase 6:** complete; G6 passed 16 Nov 2026 with scope limits
 
 > **Update, 16 November 2026.** F3 and F4 were executed on a local GTX 1650 (five seeds each).
 > F5 was not run because the conditional rule was not met. Full results and analysis are in
@@ -181,6 +181,13 @@ decision is needed on whether to correct that documentation (it is an approved a
 3. F3 (5 seeds) and F4 (5 seeds) ran on the local GTX 1650 on 16 November 2026.
 4. F5 was **not** run: the pre-declared conditional rule requires a meaningful FedAvg–FedProx
    difference on F3, and none was found (matched-round validation macro-F1 indistinguishable).
-5. `docs/PHASE_5_RESULTS_AND_ANALYSIS.md` produced; G5 evidence submitted, decision pending.
+5. `docs/PHASE_5_RESULTS_AND_ANALYSIS.md` produced; G5 evidence initially submitted, decision pending.
+
+> **G5 resolved, 16 November 2026.** The explanatory ablation required by master spec Phase 5 had
+> not been run. Ablation A2 (uniform vs sample-count-weighted aggregation) was executed on F3 and
+> F2, five seeds each, with a control that reproduces the frozen F3 results exactly. Result: **54 %
+> of the F3-over-F1 advantage is attributable to aggregation weight dispersion** (one client holding
+> 37.1 % of the model), with 46 % residual partition composition. **G5 PASSED.**
+> See `PHASE_5_G5_DIAGNOSIS.md`.
 
 No Phase 6 work, no commits, and G4 remains not passed.

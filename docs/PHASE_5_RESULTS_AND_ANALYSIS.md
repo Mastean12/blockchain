@@ -4,8 +4,8 @@
 **Execution host:** local workstation, NVIDIA GeForce GTX 1650 (compute 7.5), CUDA 12.6, torch 2.14.1+cu126, Python 3.12.10
 **Conditions executed:** F1, F2 (previously on Colab Tesla T4), F3 and F4 (this host)
 **Conditions not executed:** F5 — conditional rule not met (see §6)
-**G5:** not declared passed; see §7
-**G4:** remains NOT passed and is not retrospectively revised
+**G5:** **PASSED 16 November 2026** after ablation A2 — see `PHASE_5_G5_DIAGNOSIS.md`
+**G4:** **PASSED 16 November 2026** with documented defect — see `PHASE_4_G4_RESOLUTION.md`
 
 This document supersedes the "Stage B partially executed" state of
 `PHASE_5_EXECUTION_STATUS.md`. All Phase 4 material below is the previously frozen record and is
@@ -186,15 +186,23 @@ Machine-readable summary: `docs/phase5_results/phase5_results.json`.
 
 ## 10. G5 assessment
 
+> **RESOLVED 16 November 2026 — G5 PASSED.** This section records the position at the time of
+> writing (analysis only, no ablations). The required explanatory ablation has since been executed;
+> the full record is in [`PHASE_5_G5_DIAGNOSIS.md`](PHASE_5_G5_DIAGNOSIS.md). Summary: ablation A2
+> (uniform vs sample-count-weighted aggregation) on F3 and F2, five seeds each, with a control that
+> reproduces the frozen F3 results exactly, showed that **54 % of the F3-over-F1 advantage is
+> attributable to aggregation weight dispersion** (one client holding 37.1 % of the aggregated
+> model), leaving 46 % partition composition. G5-a, G5-b and G5-c below are all closed.
+
 G5 requires IID/non-IID comparisons **and explanatory ablations** completed. Conditions F1–F4 are
 complete with five seeds each. The explanatory evidence here is analysis of the logged runs
 (matched-round comparison, selected-round distribution, loss trajectories), not new ablation runs.
 
-Recommendation to the research lead: treat G5 as **evidence-submitted, decision pending**. It is
-not self-declared passed. The open decisions are:
+Recommendation to the research lead as submitted: treat G5 as **evidence-submitted, decision
+pending**. The decisions requested were:
 
-| # | Decision | Evidence |
-|---|---|---|
-| G5-a | Accept the F3 > F1/F2 result as a split-specific effect, or require an ablation to test it | §7.2 |
-| G5-b | Accept the FedProx null result and the documented F5 omission | §5, §6 |
-| G5-c | Record the fragile checkpoint-selection behaviour as a limitation across all conditions | §7.4 |
+| # | Decision | Evidence | Resolution |
+|---|---|---|---|
+| G5-a | Accept the F3 > F1/F2 result as a split-specific effect, or require an ablation to test it | §7.2 | **Ablation required and run** — 54 % weighting / 46 % composition |
+| G5-b | Accept the FedProx null result and the documented F5 omission | §5, §6 | **Accepted** — documented in §6 |
+| G5-c | Record the fragile checkpoint-selection behaviour as a limitation across all conditions | §7.4 | **Recorded** — §9 of the G5 diagnosis and `LIMITATIONS.md` |

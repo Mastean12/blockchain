@@ -2,7 +2,10 @@
 
 This project follows the research execution plan in `MASTER_RESEARCH_EXECUTION_SPECIFICATION.md`.
 
-Phases 0–3 are complete. Phase 4 is authorized and its baseline code is implemented. A one-batch CPU smoke test passed; the full five-seed centralized and local-only runs still need to be executed on the approved Colab GPU. G4 has not passed.
+Phases 0–6 have been executed. Phase 4 and Phase 5 results are frozen; G4 passed on 16 November 2026 with the S-class
+defect documented as an accepted limitation (S recall 0.000); G5 passed on 16 November 2026 after a controlled ablation identified the mechanism behind the F3 result. Phase 6 (differential privacy, homomorphic encryption and their
+combination) is complete and G6 passed on 16 November 2026 with documented scope limits. Phase 7
+(blockchain audit) has not started.
 
 ## Project objective
 
@@ -141,7 +144,20 @@ These commands validate the mapping, regenerate the deterministic split, and reb
 
 ## Current status
 
-Status: Phases 0–3 are complete and G3 passed. Phase 4 baseline implementation is in progress; the full GPU experiments have not run, and G4 has not passed. The approved split and preprocessing manifests remain frozen.
+Status: **Phases 0–6 executed; Phase 7 not started.**
+
+| Phase | State |
+|---|---|
+| 0–3 | Complete. G3 passed. Split and preprocessing manifests frozen and unchanged. |
+| 4 | Executed in full (30 fits), artefacts recovered and reproduced. **G4 PASSED 16 Nov 2026 with documented defect** — S recall 0.000; two ablations attempted and rejected. |
+| 5 | F1–F4 complete (5 seeds each). F5 not run by the pre-declared rule. **G5 PASSED 16 Nov 2026** — ablation A2 attributed 54% of the F3 advantage to aggregation weighting. |
+| 6 | DP, HE and HE+DP executed and measured (5 seeds each). **G6 passed 16 Nov 2026 with documented scope limits.** |
+| 7–10 | Not started. |
+
+**Phase 6 headline:** HE is functionally lossless (macro-F1 0.3681 vs 0.3752 plaintext) at 20.5×
+communication cost. Whole-model client-level DP destroys this classifier at every tested
+configuration; the DP arm is recorded as a documented negative result. See
+[Phase 6 results](docs/PHASE_6_RESULTS_AND_ANALYSIS.md).
 
 Important Phase 3 limitation: Q is absent from validation and F is absent from test. Those class-specific metrics are not estimable for the affected partitions; the split was not redrawn to improve metrics.
 
@@ -158,6 +174,8 @@ Project documents:
 - [Preprocessing audit report](docs/data_and_labels/PHASE3_PREPROCESSING_AUDIT.json)
 - [Phase 3 final split evaluation](docs/PHASE_3_FINAL_EVALUATION.md)
 - [Phase 4 baseline protocol](docs/PHASE4_BASELINE_PROTOCOL.md)
+- [Phase 4 G4 resolution](docs/PHASE_4_G4_RESOLUTION.md)
+- [Phase 5 G5 diagnosis](docs/PHASE_5_G5_DIAGNOSIS.md)
 - [Approved Phase 4 CNN config](configs/models/phase4_cnn_v1.yaml)
 - [Phase 4 execution status](docs/PHASE4_EXECUTION_STATUS.md)
 - [Phase 4 diagnostic ablation protocol](docs/PHASE_4_DIAGNOSTIC_ABLATION.md)
@@ -168,6 +186,20 @@ Project documents:
 - [Phase 5 manifest audit](docs/PHASE_5_MANIFEST_AUDIT.md)
 - [Phase 5 results and analysis](docs/PHASE_5_RESULTS_AND_ANALYSIS.md)
 - [Phase 5 results snapshot](docs/phase5_results/phase5_results.json)
+- [Phase 6 implementation plan](docs/PHASE_6_IMPLEMENTATION_PLAN.md)
+- [Phase 6 privacy threat model](docs/PHASE_6_PRIVACY_THREAT_MODEL.md)
+- [Phase 6 privacy mathematics](docs/PHASE_6_PRIVACY_MATHEMATICS.md)
+- [Phase 6 experiment matrix](docs/PHASE_6_EXPERIMENT_MATRIX.md)
+- [Phase 6 calibration report](docs/PHASE_6_CALIBRATION_REPORT.md)
+- [Phase 6 DP frontier diagnostic](docs/PHASE_6_DP_FRONTIER_DIAGNOSTIC.md)
+- [Phase 6 results and analysis](docs/PHASE_6_RESULTS_AND_ANALYSIS.md)
+- [Phase 6 execution status](docs/PHASE_6_EXECUTION_STATUS.md)
+- [Privacy threat model (canonical)](docs/PHASE_6_PRIVACY_THREAT_MODEL.md)
+- [Phase 6 privacy configs](configs/privacy/)
+- [Experiment registry](docs/methodology/EXPERIMENT_REGISTRY.md)
+- [Results and analysis index](docs/methodology/RESULTS_AND_ANALYSIS.md)
+- [Limitations](docs/limitations/LIMITATIONS.md)
+- [Reproducibility](docs/reproducibility/REPRODUCIBILITY.md)
 - [New machine runbook](docs/NEW_MACHINE_RUNBOOK.md)
 - [Federated configs](configs/federated/)
 - [Phase 5 frozen partitions](data/splits/phase5/)

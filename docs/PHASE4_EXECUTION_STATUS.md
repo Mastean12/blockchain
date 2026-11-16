@@ -3,7 +3,10 @@
 **Last updated:** 15 November 2026  
 **Baseline execution:** Complete — all 30 approved fits finished on a Colab Tesla T4  
 **Diagnostic ablation:** Complete — D1 and D2 executed; neither recovered class S  
-**G4 gate:** NOT passed — recommendation submitted for research-lead review  
+**G4 gate:** **RESOLVED 16 November 2026 — PASSED with documented defect.** See
+[`PHASE_4_G4_RESOLUTION.md`](PHASE_4_G4_RESOLUTION.md). This document retains the original
+pre-resolution record for the audit trail; where it says G4 is not passed, read it as the state
+at 15 November 2026.  
 **G3 split:** Frozen and unchanged; no manifest, config or recipe modifications  
 **Phase 5:** Not started and not authorized
 
@@ -48,7 +51,7 @@ This document separates two distinct facts:
 | client_04 | 0.9433 | 0.3043 | 0.8668 ± 0.0058 | 0.2462 ± 0.0177 |
 | client_05 | 0.7846 | 0.2832 | 0.8143 ± 0.0297 | 0.3279 ± 0.0270 |
 
-## Why G4 is not passed
+## Why G4 was not passed (15 Nov 2026 — superseded by PHASE_4_G4_RESOLUTION.md)
 
 The centralized model never predicts S despite 1,483 test S windows. Accuracy near 0.85 is
 carried by class N (87% of test windows).
@@ -125,18 +128,33 @@ Revisiting the split (option C) is not supported by the evidence.
 | Repeated seeds | Passed | 5 seeds per condition, SD reported |
 | Initial FL runs | Not run; out of authorized scope | Phase 5 not started |
 
-**Gate decision:** G4 is **not passed**. Baseline execution is complete and documented; the
+**Gate decision at 15 November 2026:** G4 was **not passed**. This was subsequently resolved on 16 November 2026 — see below. Baseline execution is complete and documented; the
 centralized model fails to learn a supported minority class; and both approved diagnostics
 failed to recover it. The master gate additionally expects initial FL evidence that belongs to
 Phase 5.
 
 ### G4 recommendation submitted for research-lead review
 
+> **Resolved 16 November 2026.** The research lead instructed that G4 be resolved before Phase 7.
+> **Option A was adopted:** the baseline is validated and the S-class defect is accepted and fully
+> characterised. Option B was attempted (two pre-registered ablations) and failed its own
+> criterion; Option C was not taken. Full record and evidence:
+> [`PHASE_4_G4_RESOLUTION.md`](PHASE_4_G4_RESOLUTION.md).
+
+| Option | Scope | Outcome |
+|---|---|---|
+| **A. Accept with documented limitation** | None; carry S as a known non-learner | **ADOPTED** — artefacts recovered, S defect characterised with 6 independent evidence lines |
+| B. Targeted ablation (selection and/or architecture) | New pre-registered experiment IDs | **ATTEMPTED AND FAILED** — selection hypothesis rejected on checkpoint evidence; max+mean pooling ablation reached at most 4/61 validation S windows, criterion ≥3/5 seeds not met |
+| C. Revisit the G3 split | Invalidates Phase 3 approval | **NOT TAKEN** — evidence shows a better validation population would not make this architecture learn S |
+
 Report the Phase 4 baseline as **executed but defective**, not as replaced. The pipeline is
 sound and the defect is structural, so neither further loss tuning nor further selection tuning
 within the current protocol is expected to help.
 
-| Option | Scope | Assessment |
+*(Original options as submitted on 15 November 2026, retained for the audit trail — the outcome
+of each is recorded in the table above.)*
+
+| Option | Scope | Assessment at the time |
 |---|---|---|
 | A. Accept with documented limitation | None; carry S as a known non-learner into Phase 5 | Lowest cost; honest reporting only |
 | B. Targeted stage-7 ablation (representational capacity or training-only sampler) | New pre-registered experiment IDs; changes preprocessing only if a window/preprocessing review is chosen | Recommended if some S performance is required |
