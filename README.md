@@ -2,10 +2,11 @@
 
 This project follows the research execution plan in `MASTER_RESEARCH_EXECUTION_SPECIFICATION.md`.
 
-Phases 0–6 have been executed. Phase 4 and Phase 5 results are frozen; G4 passed on 16 November 2026 with the S-class
+Phases 0–7 have been executed. Phase 4 and Phase 5 results are frozen; G4 passed on 16 November 2026 with the S-class
 defect documented as an accepted limitation (S recall 0.000); G5 passed on 16 November 2026 after a controlled ablation identified the mechanism behind the F3 result. Phase 6 (differential privacy, homomorphic encryption and their
-combination) is complete and G6 passed on 16 November 2026 with documented scope limits. Phase 7
-(blockchain audit) has not started.
+combination) is complete and G6 passed on 16 November 2026 with documented scope limits. Phase 7 (blockchain audit)
+is complete and G7 passed on 16 November 2026, scoped to a Level 1 hash-chained audit log and a Level 2 single-node
+Ganache prototype — not a distributed blockchain. Phase 8 has not started.
 
 ## Project objective
 
@@ -144,7 +145,7 @@ These commands validate the mapping, regenerate the deterministic split, and reb
 
 ## Current status
 
-Status: **Phases 0–6 executed; Phase 7 not started.**
+Status: **Phases 0–7 executed.**
 
 | Phase | State |
 |---|---|
@@ -152,7 +153,8 @@ Status: **Phases 0–6 executed; Phase 7 not started.**
 | 4 | Executed in full (30 fits), artefacts recovered and reproduced. **G4 PASSED 16 Nov 2026 with documented defect** — S recall 0.000; two ablations attempted and rejected. |
 | 5 | F1–F4 complete (5 seeds each). F5 not run by the pre-declared rule. **G5 PASSED 16 Nov 2026** — ablation A2 attributed 54% of the F3 advantage to aggregation weighting. |
 | 6 | DP, HE and HE+DP executed and measured (5 seeds each). **G6 passed 16 Nov 2026 with documented scope limits.** |
-| 7–10 | Not started. |
+| 7 | Audit layer (hash chain L1 + Ganache contract L2) implemented and measured. **G7 PASSED 16 Nov 2026** (scope: L1/L2 only). |
+| 8–10 | Not started. |
 
 **Phase 6 headline:** HE is functionally lossless (macro-F1 0.3681 vs 0.3752 plaintext) at 20.5×
 communication cost. Whole-model client-level DP destroys this classifier at every tested
@@ -194,6 +196,10 @@ Project documents:
 - [Phase 6 DP frontier diagnostic](docs/PHASE_6_DP_FRONTIER_DIAGNOSTIC.md)
 - [Phase 6 results and analysis](docs/PHASE_6_RESULTS_AND_ANALYSIS.md)
 - [Phase 6 execution status](docs/PHASE_6_EXECUTION_STATUS.md)
+- [Phase 7 readiness report](docs/PHASE_7_READINESS_REPORT.md)
+- [Phase 7 results and analysis](docs/PHASE_7_RESULTS_AND_ANALYSIS.md)
+- [Phase 7 execution status](docs/PHASE_7_EXECUTION_STATUS.md)
+- [Security threat model](docs/threat_model/SECURITY_THREAT_MODEL.md)
 - [Privacy threat model (canonical)](docs/PHASE_6_PRIVACY_THREAT_MODEL.md)
 - [Phase 6 privacy configs](configs/privacy/)
 - [Experiment registry](docs/methodology/EXPERIMENT_REGISTRY.md)

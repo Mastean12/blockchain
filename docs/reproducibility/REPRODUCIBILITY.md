@@ -20,6 +20,11 @@ Environment, commands and artifacts required to reproduce Phases 0–6.
 | opacus | 1.6.0 |
 | tenseal | 0.3.18 (cp312 win_amd64) |
 | pytest | 9.2.0 |
+| Node.js | 24.15.0 |
+| ganache | 7.9.2 |
+| solc | 0.8.38 |
+| web3.py | 7.16.0 |
+| eth-account | 0.13.7 |
 
 Phases 4 and 5 (F1, F2) were executed on Colab Tesla T4, CUDA 13.0, torch 2.14.1+cu130,
 Python 3.13.16. Phase 5 (F3, F4) and all of Phase 6 ran on the local GTX 1650 above.
@@ -75,7 +80,7 @@ The loaders re-verify these on every run and refuse to train on a mismatch.
 .\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-Expected: **93 passed, 1 skipped**. The skip is a CPU-only test, skipped when CUDA is present.
+Expected: **165 passed, 1 skipped**. The skip is a CPU-only test, skipped when CUDA is present.
 
 Committing note: the splits and processed arrays are regenerated deterministically from raw data;
 the report's own manifest hash differs only in recorded `numpy_version` when the patch version
@@ -124,3 +129,38 @@ selected round is fixed.
 | Phase 6 P2 HE-only, one seed | ≈336 s total (HE ≈12 s of it) |
 | Phase 6 P3, one seed | ≈337 s |
 | D-2 diagnostic, 8 rounds | ≈51 s |
+
+
+## 9. Phase 7 blockchain toolchain
+
+The audit layer needs a pinned Node toolchain and a local Ganache node.
+
+```powershell
+cd tools\blockchain
+npm install          # installs ganache 7.9.2 and solc 0.8.38 from package.json
+node compile.js      # writes build/AuditLog.json (git-ignored; regenerate as needed)
+
+# start the local chain, then leave it running in a second terminal
+.\node_modules\.bin\ganache.cmd --server.port 8545 --chain.chainId 1337 `
+    --wallet.totalAccounts 10 --wallet.defaultBalance 1000 --miner.blockTime 0
+```
+
+Then, from the project root:
+
+```powershell
+# B1: hash-chain audit only
+.\.venv\Scripts\python.exe -m scripts.run_phase7_audit `
+    --output-dir experiments/logs/phase7/b1_hash_chain --seed 42 --device cuda
+
+# B2: hash chain plus contract
+.\.venv\Scripts\python.exe -m scripts.run_phase7_audit `
+    --output-dir experiments/logs/phase7/b2_ganache --seed 42 --device cuda --use-contract
+```
+
+Contract tests (`tests/test_phase7_contract.py`) skip with a clear reason when no node is
+running. A measured run must include them; do not report Phase 7 costs from a suite that skipped
+them.
+
+**Known environment note.** Ganache 7.9.2 warns that its native µWS binding is incompatible with
+Node 24 and falls back to a JavaScript implementation, advising that performance may be degraded.
+Gas measurements are unaffected; latency figures may be conservative.

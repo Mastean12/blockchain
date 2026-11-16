@@ -38,6 +38,9 @@ blockchain = [
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+markers = [
+    "phase7_evm: requires a running local Ganache node (Phase 7 Level 2 contract tests)",
+]
 
 [tool.setuptools]
 packages = ["src"]
