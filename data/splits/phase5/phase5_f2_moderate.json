@@ -1,0 +1,124 @@
+{
+  "allocation_seed": 42,
+  "allocation_unit": "frozen record group; beats are never distributed individually",
+  "client_count": 5,
+  "clients": [
+    {
+      "absent_classes": [
+        "Q"
+      ],
+      "class_counts": {
+        "F": 374,
+        "N": 18465,
+        "Q": 0,
+        "S": 528,
+        "V": 1480
+      },
+      "client_id": "client_01",
+      "record_count": 9,
+      "record_ids": [
+        113,
+        115,
+        123,
+        209,
+        213,
+        219,
+        220,
+        228,
+        233
+      ],
+      "sample_count": 20847
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 391,
+        "N": 10437,
+        "Q": 7,
+        "S": 106,
+        "V": 1553
+      },
+      "client_id": "client_02",
+      "record_count": 5,
+      "record_ids": [
+        105,
+        124,
+        208,
+        212,
+        223
+      ],
+      "sample_count": 12494
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 4,
+        "N": 12321,
+        "Q": 4,
+        "S": 293,
+        "V": 981
+      },
+      "client_id": "client_03",
+      "record_count": 6,
+      "record_ids": [
+        116,
+        201,
+        202,
+        203,
+        207,
+        230
+      ],
+      "sample_count": 13603
+    },
+    {
+      "absent_classes": [
+        "Q"
+      ],
+      "class_counts": {
+        "F": 3,
+        "N": 12108,
+        "Q": 0,
+        "S": 244,
+        "V": 1511
+      },
+      "client_id": "client_04",
+      "record_count": 6,
+      "record_ids": [
+        106,
+        117,
+        121,
+        200,
+        215,
+        222
+      ],
+      "sample_count": 13866
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 16,
+        "N": 10658,
+        "Q": 2,
+        "S": 66,
+        "V": 375
+      },
+      "client_id": "client_05",
+      "record_count": 5,
+      "record_ids": [
+        114,
+        205,
+        214,
+        231,
+        234
+      ],
+      "sample_count": 11117
+    }
+  ],
+  "dirichlet_concentration": 0.5,
+  "family": "record_dirichlet_0.5",
+  "manifest_sha256": "c447d732cb9e886b87db10b50bec8ec3df9944458198162f920b8966413a02d3",
+  "parent_client_manifest_sha256": "71dbcac37e2a605d5edcd0ce280acec60068a1f1defb4f403bc32a5e1cb8eba3",
+  "parent_split_manifest_sha256": "bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96",
+  "phase": 5,
+  "schema_version": 1
+}

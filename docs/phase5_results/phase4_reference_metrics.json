@@ -1,0 +1,38 @@
+{
+  "centralized": {
+    "test_accuracy_mean": 0.851,
+    "test_accuracy_sd": 0.0348,
+    "test_macro_f1_mean": 0.299,
+    "test_macro_f1_sd": 0.06,
+    "test_weighted_f1_mean": 0.8085,
+    "s_recall": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "local_only": {
+    "client_01": {
+      "test_accuracy": 0.8958,
+      "test_macro_f1": 0.4598
+    },
+    "client_02": {
+      "test_accuracy": 0.7075,
+      "test_macro_f1": 0.2721
+    },
+    "client_03": {
+      "test_accuracy": 0.8493,
+      "test_macro_f1": 0.2297
+    },
+    "client_04": {
+      "test_accuracy": 0.8668,
+      "test_macro_f1": 0.2462
+    },
+    "client_05": {
+      "test_accuracy": 0.8143,
+      "test_macro_f1": 0.3279
+    }
+  }
+}

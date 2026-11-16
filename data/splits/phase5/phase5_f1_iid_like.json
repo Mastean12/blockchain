@@ -1,0 +1,122 @@
+{
+  "allocation_seed": null,
+  "allocation_unit": "frozen record group; beats are never distributed individually",
+  "client_count": 5,
+  "clients": [
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 377,
+        "N": 11131,
+        "Q": 2,
+        "S": 337,
+        "V": 1040
+      },
+      "client_id": "client_01",
+      "record_count": 6,
+      "record_ids": [
+        117,
+        124,
+        208,
+        220,
+        222,
+        230
+      ],
+      "sample_count": 12887
+    },
+    {
+      "absent_classes": [
+        "Q"
+      ],
+      "class_counts": {
+        "F": 364,
+        "N": 11673,
+        "Q": 0,
+        "S": 68,
+        "V": 1520
+      },
+      "client_id": "client_02",
+      "record_count": 6,
+      "record_ids": [
+        113,
+        116,
+        123,
+        200,
+        213,
+        228
+      ],
+      "sample_count": 13625
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 22,
+        "N": 13181,
+        "Q": 5,
+        "S": 118,
+        "V": 1154
+      },
+      "client_id": "client_03",
+      "record_count": 6,
+      "record_ids": [
+        105,
+        205,
+        207,
+        212,
+        231,
+        233
+      ],
+      "sample_count": 14480
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 22,
+        "N": 14740,
+        "Q": 4,
+        "S": 320,
+        "V": 1180
+      },
+      "client_id": "client_04",
+      "record_count": 7,
+      "record_ids": [
+        114,
+        115,
+        201,
+        202,
+        203,
+        223,
+        234
+      ],
+      "sample_count": 16266
+    },
+    {
+      "absent_classes": [],
+      "class_counts": {
+        "F": 3,
+        "N": 13264,
+        "Q": 2,
+        "S": 394,
+        "V": 1006
+      },
+      "client_id": "client_05",
+      "record_count": 6,
+      "record_ids": [
+        106,
+        121,
+        209,
+        214,
+        215,
+        219
+      ],
+      "sample_count": 14669
+    }
+  ],
+  "dirichlet_concentration": null,
+  "family": "frozen_iid_like",
+  "manifest_sha256": "7d635f51c966fd47dbfa8db960aa27f23d66dc514dc28113842bf2271e54c0a2",
+  "parent_client_manifest_sha256": "71dbcac37e2a605d5edcd0ce280acec60068a1f1defb4f403bc32a5e1cb8eba3",
+  "parent_split_manifest_sha256": "bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96",
+  "phase": 5,
+  "schema_version": 1
+}

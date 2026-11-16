@@ -76,4 +76,6 @@ Training-only normalization parameters: mean `-0.2829528302450724`, standard dev
 
 ## Gate and next stage
 
-**G3: PASS.** Split/client manifests are frozen and hashed; partition membership, subject grouping, label reconciliation, segment shapes and finite values were validated. No model training has started. Training remains blocked until the applicable Phase 4 model-validation gate is satisfied.
+**G3: PASS.** Split/client manifests are frozen and hashed; partition membership, subject grouping, label reconciliation, segment shapes and finite values were validated. At G3 completion, no model training had started. Phase 4 baselines have since been executed in full (G4 not passed because of 0.000 S-class recall) and Phase 5 federated learning is in progress; see [the Phase 4 execution status](../PHASE4_EXECUTION_STATUS.md) and [the Phase 5 execution status](../PHASE_5_EXECUTION_STATUS.md). The split and its hashes are unchanged.
+
+Note on the client table above: the N/S/V/F/Q columns are **annotation counts** from the per-record audit. Processed window counts are lower because boundary windows without a full 253-sample window are dropped (training: 26 N, 1 V, 1 F). See [the Phase 5 manifest audit](../PHASE_5_MANIFEST_AUDIT.md).

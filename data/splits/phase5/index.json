@@ -1,0 +1,226 @@
+{
+  "phase5_f1_iid_like": {
+    "clients": [
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 377,
+          "N": 11131,
+          "Q": 2,
+          "S": 337,
+          "V": 1040
+        },
+        "client_id": "client_01",
+        "records": 6,
+        "samples": 12887
+      },
+      {
+        "absent": [
+          "Q"
+        ],
+        "class_counts": {
+          "F": 364,
+          "N": 11673,
+          "Q": 0,
+          "S": 68,
+          "V": 1520
+        },
+        "client_id": "client_02",
+        "records": 6,
+        "samples": 13625
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 22,
+          "N": 13181,
+          "Q": 5,
+          "S": 118,
+          "V": 1154
+        },
+        "client_id": "client_03",
+        "records": 6,
+        "samples": 14480
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 22,
+          "N": 14740,
+          "Q": 4,
+          "S": 320,
+          "V": 1180
+        },
+        "client_id": "client_04",
+        "records": 7,
+        "samples": 16266
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 3,
+          "N": 13264,
+          "Q": 2,
+          "S": 394,
+          "V": 1006
+        },
+        "client_id": "client_05",
+        "records": 6,
+        "samples": 14669
+      }
+    ],
+    "family": "frozen_iid_like",
+    "manifest_sha256": "7d635f51c966fd47dbfa8db960aa27f23d66dc514dc28113842bf2271e54c0a2"
+  },
+  "phase5_f2_moderate": {
+    "clients": [
+      {
+        "absent": [
+          "Q"
+        ],
+        "class_counts": {
+          "F": 374,
+          "N": 18465,
+          "Q": 0,
+          "S": 528,
+          "V": 1480
+        },
+        "client_id": "client_01",
+        "records": 9,
+        "samples": 20847
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 391,
+          "N": 10437,
+          "Q": 7,
+          "S": 106,
+          "V": 1553
+        },
+        "client_id": "client_02",
+        "records": 5,
+        "samples": 12494
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 4,
+          "N": 12321,
+          "Q": 4,
+          "S": 293,
+          "V": 981
+        },
+        "client_id": "client_03",
+        "records": 6,
+        "samples": 13603
+      },
+      {
+        "absent": [
+          "Q"
+        ],
+        "class_counts": {
+          "F": 3,
+          "N": 12108,
+          "Q": 0,
+          "S": 244,
+          "V": 1511
+        },
+        "client_id": "client_04",
+        "records": 6,
+        "samples": 13866
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 16,
+          "N": 10658,
+          "Q": 2,
+          "S": 66,
+          "V": 375
+        },
+        "client_id": "client_05",
+        "records": 5,
+        "samples": 11117
+      }
+    ],
+    "family": "record_dirichlet_0.5",
+    "manifest_sha256": "c447d732cb9e886b87db10b50bec8ec3df9944458198162f920b8966413a02d3"
+  },
+  "phase5_f3_severe": {
+    "clients": [
+      {
+        "absent": [
+          "Q"
+        ],
+        "class_counts": {
+          "F": 45,
+          "N": 23225,
+          "Q": 0,
+          "S": 951,
+          "V": 2464
+        },
+        "client_id": "client_01",
+        "records": 11,
+        "samples": 26685
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 377,
+          "N": 13162,
+          "Q": 7,
+          "S": 42,
+          "V": 1192
+        },
+        "client_id": "client_02",
+        "records": 7,
+        "samples": 14780
+      },
+      {
+        "absent": [
+          "F",
+          "Q"
+        ],
+        "class_counts": {
+          "F": 0,
+          "N": 5894,
+          "Q": 0,
+          "S": 3,
+          "V": 363
+        },
+        "client_id": "client_03",
+        "records": 3,
+        "samples": 6260
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 1,
+          "N": 10284,
+          "Q": 4,
+          "S": 203,
+          "V": 657
+        },
+        "client_id": "client_04",
+        "records": 5,
+        "samples": 11149
+      },
+      {
+        "absent": [],
+        "class_counts": {
+          "F": 365,
+          "N": 11424,
+          "Q": 2,
+          "S": 38,
+          "V": 1224
+        },
+        "client_id": "client_05",
+        "records": 5,
+        "samples": 13053
+      }
+    ],
+    "family": "record_dirichlet_0.1",
+    "manifest_sha256": "da8b96fa118e53bf53bee50b4f56bb6c281c65093b3c690058664f7b0cf8bbd4"
+  }
+}

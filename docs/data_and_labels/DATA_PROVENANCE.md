@@ -62,4 +62,4 @@ The database was collected in 1975–1979 and deliberately includes records sele
 - Approved mapping and record exclusions: [aami5_mapping_v1.yaml](../../configs/data/aami5_mapping_v1.yaml)
 - Reproducible audit implementation: [audit_mitdb_annotations.py](../../scripts/audit_mitdb_annotations.py)
 
-Phase 3 generated the split manifests and processed windows described in [SPLIT_POLICY.md](./SPLIT_POLICY.md). No model fitting or training has been performed.
+Phase 3 generated the split manifests and processed windows described in [SPLIT_POLICY.md](./SPLIT_POLICY.md). Phase 4 has since run a one-batch CPU CNN smoke test; the full centralized and local-only baseline training runs have not been performed.

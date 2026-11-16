@@ -1,0 +1,116 @@
+schema_version: 1
+experiment_id: phase5_f4_fedprox_severe
+phase: 5
+parent_experiment_id: phase4_cnn_v1
+description: 'FedProx on the same severe-skew partition as F3, with a matched round
+  budget. Motivated by client drift under label skew (Li et al., 2020).
+
+  '
+protocol_document: docs/PHASE_5_IMPLEMENTATION_PLAN.md
+expected_split_manifest_sha256: bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96
+expected_client_manifest_sha256: 71dbcac37e2a605d5edcd0ce280acec60068a1f1defb4f403bc32a5e1cb8eba3
+partition:
+  source: record_dirichlet_manifest
+  manifest_path: data/splits/phase5/phase5_f3_severe.json
+  manifest_sha256: da8b96fa118e53bf53bee50b4f56bb6c281c65093b3c690058664f7b0cf8bbd4
+class_order:
+- N
+- S
+- V
+- F
+- Q
+input_samples: 253
+model:
+  name: compact_cnn_v1
+  convolution_blocks:
+  - input_channels: 1
+    output_channels: 32
+    kernel_size: 7
+    padding: 3
+    max_pool: 2
+  - input_channels: 32
+    output_channels: 64
+    kernel_size: 5
+    padding: 2
+    max_pool: 2
+  - input_channels: 64
+    output_channels: 128
+    kernel_size: 3
+    padding: 1
+    max_pool: null
+  normalization: batch_norm_1d
+  activation: relu
+  pooling: adaptive_average_1d
+  dropout: 0.3
+  classifier: linear_128_to_5
+  trainable_parameter_count: 36357
+federated:
+  method: fedprox
+  proximal_mu: 0.01
+  rounds: 50
+  local_epochs: 2
+  participation_fraction: 1.0
+  aggregation_weights: sample_count
+  batchnorm_handling: running_statistics_weighted_by_sample_count
+  optimizer_state_policy: reset_each_round
+  client_dropout_policy: none_beyond_declared_participation_fraction
+  approval:
+    status: approved
+    approved_by: research lead
+    approved_on: '2026-11-15'
+    source: Phase 5 Stage B authorisation message
+    decisions:
+      rounds: 50
+      local_epochs: 2
+      participation_fraction: all five clients every round
+      iid_reference: retained (frozen Phase 3 client manifest)
+      dirichlet_alpha:
+      - 0.5
+      - 0.1
+      fedprox_proximal_mu: 0.01
+      batchnorm_buffers: sample-count-weighted aggregation
+      optimizer_state: reset at the beginning of each round
+training:
+  optimizer: AdamW
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  loss: cross_entropy
+  class_weights: null
+  batch_size: 256
+  maximum_epochs: 50
+  early_stopping:
+    metric: validation_supported_class_macro_f1
+    classes:
+    - N
+    - S
+    - V
+    - F
+    patience: 8
+    evaluate_epoch_zero: true
+    tie_policy: keep_earliest_epoch
+  seeds:
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  deterministic_algorithms: true
+metrics:
+  absent_class_policy: not_estimable
+  validation_macro_classes:
+  - N
+  - S
+  - V
+  - F
+  test_macro_policy: classes_with_true_support_only
+  confusion_matrix_class_order:
+  - N
+  - S
+  - V
+  - F
+  - Q
+data:
+  processed_directory: data/processed/phase3
+  split_manifest: data/splits/phase3_split_manifest.json
+  client_manifest: data/splits/client_manifests.json
+  preprocessing_report: docs/data_and_labels/PHASE3_PREPROCESSING_AUDIT.json

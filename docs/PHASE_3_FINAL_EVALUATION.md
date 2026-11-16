@@ -3,7 +3,7 @@
 **Review date:** 13 November 2026  
 **Status:** Focused evaluation complete; the research lead retained the frozen G3 split  
 **Scope:** Class-support limitations of the frozen G3 split and feasibility of a prospective group-aware alternative  
-**Training:** Not started; Phase 4 has not begun
+**Training at review completion:** Not started; Phase 4 had not begun
 
 ## Executive finding
 
@@ -197,4 +197,4 @@ No candidate arrays or candidate preprocessing report were created. The candidat
 - Freeze the metric definitions and class-support reporting before model fitting. Although all five classes would be present in both validation and test, Q is only 5/2 beats and F test support is concentrated in one record. Report these as severe support limitations; do not imply five-class patient-independent performance.
 - Keep records 201/202 together. The dataset does not establish subject identity for all other records, so neither the original nor proposed design supports an unconditional patient-independent claim.
 
-**Disposition:** The research lead chose to retain the frozen G3 split. The proposal-only alternative was not adopted. No split has been changed, no model has been trained, and Phase 4 has not begun. This decision does not authorize Phase 4.
+**Disposition at review completion:** The research lead chose to retain the frozen G3 split. The proposal-only alternative was not adopted. At that point, no model had been trained and Phase 4 had not begun. The later Phase 4 authorization and smoke test do not change the retained split.

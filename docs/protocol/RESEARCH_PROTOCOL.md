@@ -65,11 +65,14 @@ This table defines the planned sequence, not authorization to execute it. Compon
 
 ### 4.3 Model and training controls
 
-- Start with a majority baseline, then one configured 1D CNN; do not tune repeatedly against test results.
+- The research lead approved the `compact_cnn_v1` architecture in `configs/models/phase4_cnn_v1.yaml`: input `(B,1,253)`, three Conv1d blocks (32/64/128 channels; kernels 7/5/3), BatchNorm1d/ReLU, max-pooling after the first two blocks, adaptive-average pooling, dropout 0.3 and a five-class linear head (36,357 trainable parameters).
+- Use AdamW (learning rate 0.001, weight decay 0.0001), unweighted cross-entropy, batch size 256, maximum 50 epochs, and no augmentation or class weighting for this baseline.
+- Start with the mandatory majority baseline, then the configured CNN centrally and independently on each of the five frozen training clients. Do not tune repeatedly against test results.
 - Keep architecture and training budgets matched across methods where possible; record any unavoidable differences.
-- Validation data alone determine hyperparameters, early stopping and checkpoint selection. Macro-F1 is the research-lead-selected primary checkpoint-selection metric; its implementation and stopping rule must be frozen and tested before final test evaluation.
+- Validation data alone determine hyperparameters, early stopping and checkpoint selection. Because Q is absent from validation, select checkpoints by macro-F1 over the supported classes N/S/V/F; do not substitute zero for Q or describe the selection score as five-class macro-F1. Stop after eight epochs without improvement, evaluate epoch 0, and retain the earliest epoch on a tie.
+- The frozen test split lacks F. Report its F metrics as not estimable, and do not claim five-class test macro-F1. Report test macro metrics only over classes with test support, with the included class set and support shown.
 - Preserve and report round-0 selection if it wins the predeclared validation rule; investigate rather than silently substitute another checkpoint.
-- Use at least five seeds if compute permits. If fewer are used, justify the constraint and report every seed. Multiple seeds on one split are not independent subject-level validation.
+- Use seeds 42–46 for the approved Phase 4 baselines. Report every seed and the mean and standard deviation. Multiple seeds on one split are not independent subject-level validation.
 
 ### 4.4 Phase 3 preprocessing freeze
 
@@ -146,7 +149,7 @@ The following decisions remain open for their applicable later gates:
 5. robust aggregation baseline set, attacker capabilities and attacker budget;
 6. whether to execute SVDB external evaluation, after primary MIT-BIH evaluation is frozen.
 
-No experiment requiring these decisions may proceed until it is resolved at the applicable gate. Phase 2 acquisition/taxonomy and Phase 3 split/preprocessing gates have passed. No model training has started; baseline experiments remain subject to the Phase 4 gate.
+No experiment requiring these decisions may proceed until it is resolved at the applicable gate. Phase 2 acquisition/taxonomy and Phase 3 split/preprocessing gates have passed. Phase 4 baselines were executed in full on 15 November 2026 and G4 was not passed because the centralized model achieved 0.000 S-class recall, a limitation formally accepted by the research lead. Phase 5 federated learning is authorised; its IID-like and moderate non-IID FedAvg conditions are complete and the remaining conditions are pending. G5 has not been assessed.
 
 ## 10. Approval record
 

@@ -92,4 +92,4 @@ The approved symbol mapping remains the five-class mapping in Section 2. The `/`
 
 This source supports the 44-record non-pacemaker policy; the exact four record IDs are corroborated by the MIT-BIH directory and per-record annotation audit. The full licensed EC57 text remains unavailable, so the project makes no clause-level EC57 or formal compliance claim. The selected published protocol and the Phase 1-approved source-access limitation are documented.
 
-**G2 status:** `PASS`. The research lead approved the exact mapping, exclusions, record policy and Q support limitation. Phase 3 subsequently passed G3; model training has not started and remains governed by the Phase 4 gate.
+**G2 status:** `PASS`. The research lead approved the exact mapping, exclusions, record policy and Q support limitation. Phase 3 subsequently passed G3. Phase 4 is authorized; a one-batch CPU smoke test has passed, while full baseline training remains in progress under the Phase 4 protocol.
