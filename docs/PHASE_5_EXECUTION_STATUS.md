@@ -1,14 +1,20 @@
 # Phase 5 - Execution Status
 
 **Last updated:** 16 November 2026  
-**Stage:** Stage B **partially executed** - 2 of 5 conditions complete  
+**Stage:** Stage B **complete for F1-F4** on the approved frozen partitions; F5 not run by the pre-declared conditional rule  
 **G4:** NOT PASSED (unchanged, not retrospectively revised)  
-**G5:** **not assessable yet** - severe-skew and FedProx conditions not run  
+**G5:** **evidence submitted, decision pending** - see `PHASE_5_RESULTS_AND_ANALYSIS.md` §10  
 **Phase 6:** not started
+
+> **Update, 16 November 2026.** F3 and F4 were executed on a local GTX 1650 (five seeds each).
+> F5 was not run because the conditional rule was not met. Full results and analysis are in
+> [`PHASE_5_RESULTS_AND_ANALYSIS.md`](PHASE_5_RESULTS_AND_ANALYSIS.md). The table in §0 below
+> records the state at the Colab hand-off and is retained unchanged for the audit trail; the
+> authoritative current state is the results document.
 
 ---
 
-## 0. Where execution stands
+## 0. Where execution stands (at Colab hand-off)
 
 | Condition | Method | Partition | Seeds | Status |
 |---|---|---|---|---|
@@ -17,6 +23,18 @@
 | `phase5_f3_fedavg_severe` | FedAvg | Dirichlet alpha=0.1 | 0/5 | **Not run** - Colab compute units exhausted |
 | `phase5_f4_fedprox_severe` | FedProx mu=0.01 | Dirichlet alpha=0.1 | 0/5 | **Not run** |
 | `phase5_f5_fedprox_moderate` | FedProx mu=0.01 | Dirichlet alpha=0.5 | 0/5 | Conditional on F4 |
+
+### 0.0 Current state after local execution
+
+| Condition | Seeds | Test acc | Test macro-F1 | S recall |
+|---|---|---|---|---|
+| F3 FedAvg severe | 5/5 | 0.8523 +/- 0.0380 | 0.3752 +/- 0.0448 | 0.000 in 5/5 |
+| F4 FedProx severe | 5/5 | 0.8213 +/- 0.0440 | 0.3390 +/- 0.0445 | 0.000 in 5/5 |
+| F5 FedProx moderate | 0/5 | not run | not run | not run |
+
+F5 omission justification: at matched rounds F3 and F4 have indistinguishable validation
+macro-F1 (0.2662 vs 0.2669 for rounds 1-5), so no meaningful FedAvg-FedProx difference exists
+to isolate. Recorded in `PHASE_5_RESULTS_AND_ANALYSIS.md` §6.
 
 Approved hyperparameters, applied and recorded in every config: 50 rounds, 2 local epochs, all
 five clients every round, FedProx `proximal_mu` 0.01, BatchNorm buffers weighted by sample
@@ -156,12 +174,13 @@ Impact on earlier phases: Phase 4 used the arrays for training, so its results a
 The Phase 3 documentation table in `SPLIT_POLICY.md` carries the inaccurate counts. A research
 decision is needed on whether to correct that documentation (it is an approved artefact).
 
-## 7. Stage B plan on approval
+## 7. Stage B outcome
 
-1. Fill D1–D3, D5 into the configs and re-freeze.
-2. Run F1 (5 seeds) on Colab GPU, review before proceeding.
-3. Run F2 and F3 (5 seeds each).
-4. Run F4 (FedProx, severe) and F5 (FedProx, moderate) **only** if the F4 result justifies it.
-5. Produce `docs/PHASE_5_RESULTS_AND_ANALYSIS.md`, then assess G5.
+1. D1–D3, D5 were filled into the configs and re-frozen before Stage B (`approved`, 2026-11-15).
+2. F1 (5 seeds) ran on Colab GPU; F2 (5 seeds) ran on Colab GPU.
+3. F3 (5 seeds) and F4 (5 seeds) ran on the local GTX 1650 on 16 November 2026.
+4. F5 was **not** run: the pre-declared conditional rule requires a meaningful FedAvg–FedProx
+   difference on F3, and none was found (matched-round validation macro-F1 indistinguishable).
+5. `docs/PHASE_5_RESULTS_AND_ANALYSIS.md` produced; G5 evidence submitted, decision pending.
 
 No Phase 6 work, no commits, and G4 remains not passed.

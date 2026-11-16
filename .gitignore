@@ -35,7 +35,8 @@ checkpoints/
 wandb/
 mlruns/
 logs/
-models/
+# Downloaded model weights only; configs/models/ holds tracked configs and must not be ignored
+/models/
 experiments/logs/
 experiments/registry/
 

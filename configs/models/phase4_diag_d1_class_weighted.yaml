@@ -1,0 +1,93 @@
+schema_version: 1
+experiment_id: phase4_diag_d1_class_weighted
+phase: 4
+parent_experiment_id: phase4_cnn_v1
+description: 'D1 diagnostic: sqrt-tempered balanced class weights derived from training
+  counts only. Keeps the approved macro-F1 selection rule and every other frozen
+  baseline hyperparameter unchanged.
+
+  '
+protocol_document: docs/PHASE_4_DIAGNOSTIC_ABLATION.md
+expected_split_manifest_sha256: bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96
+expected_client_manifest_sha256: 71dbcac37e2a605d5edcd0ce280acec60068a1f1defb4f403bc32a5e1cb8eba3
+class_order:
+- N
+- S
+- V
+- F
+- Q
+input_samples: 253
+model:
+  name: compact_cnn_v1
+  convolution_blocks:
+  - input_channels: 1
+    output_channels: 32
+    kernel_size: 7
+    padding: 3
+    max_pool: 2
+  - input_channels: 32
+    output_channels: 64
+    kernel_size: 5
+    padding: 2
+    max_pool: 2
+  - input_channels: 64
+    output_channels: 128
+    kernel_size: 3
+    padding: 1
+    max_pool: null
+  normalization: batch_norm_1d
+  activation: relu
+  pooling: adaptive_average_1d
+  dropout: 0.3
+  classifier: linear_128_to_5
+  trainable_parameter_count: 36357
+training:
+  optimizer: AdamW
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  loss: cross_entropy
+  class_weight_method: sqrt_tempered_balanced
+  class_weights:
+    N: 0.055154
+    S: 0.396683
+    V: 0.181636
+    F: 0.49701
+    Q: 3.869517
+  batch_size: 256
+  maximum_epochs: 50
+  early_stopping:
+    metric: validation_supported_class_macro_f1
+    classes:
+    - N
+    - S
+    - V
+    - F
+    patience: 8
+    evaluate_epoch_zero: true
+    tie_policy: keep_earliest_epoch
+  seeds:
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  deterministic_algorithms: true
+metrics:
+  absent_class_policy: not_estimable
+  validation_macro_classes:
+  - N
+  - S
+  - V
+  - F
+  test_macro_policy: classes_with_true_support_only
+  confusion_matrix_class_order:
+  - N
+  - S
+  - V
+  - F
+  - Q
+data:
+  processed_directory: data/processed/phase3
+  split_manifest: data/splits/phase3_split_manifest.json
+  client_manifest: data/splits/client_manifests.json
+  preprocessing_report: docs/data_and_labels/PHASE3_PREPROCESSING_AUDIT.json

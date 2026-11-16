@@ -1,0 +1,203 @@
+{
+  "phase5_f1_fedavg_iid_like": {
+    "method": "fedavg",
+    "partition": "frozen IID-like client manifest",
+    "partition_sha256": "7d635f51c966fd47dbfa8db960aa27f23d66dc514dc28113842bf2271e54c0a2",
+    "status": "complete",
+    "seeds": {
+      "42": {
+        "selected_round": 27,
+        "test_accuracy": 0.7856,
+        "test_macro_f1": 0.303,
+        "s_recall": 0.0006743088334457181,
+        "test_weighted_f1": 0.7748,
+        "total_seconds": 379.18
+      },
+      "43": {
+        "selected_round": 40,
+        "test_accuracy": 0.8028,
+        "test_macro_f1": 0.3145,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7849,
+        "total_seconds": 372.08
+      },
+      "44": {
+        "selected_round": 3,
+        "test_accuracy": 0.762,
+        "test_macro_f1": 0.2886,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7604,
+        "total_seconds": 376.12
+      },
+      "45": {
+        "selected_round": 23,
+        "test_accuracy": 0.7666,
+        "test_macro_f1": 0.2912,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7632,
+        "total_seconds": 373.75
+      },
+      "46": {
+        "selected_round": 26,
+        "test_accuracy": 0.8134,
+        "test_macro_f1": 0.3225,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7916,
+        "total_seconds": 375.62
+      }
+    }
+  },
+  "phase5_f2_fedavg_moderate": {
+    "method": "fedavg",
+    "partition": "Dirichlet alpha=0.5 over record groups",
+    "partition_sha256": "c447d732cb9e886b87db10b50bec8ec3df9944458198162f920b8966413a02d3",
+    "status": "complete",
+    "seeds": {
+      "42": {
+        "selected_round": 3,
+        "test_accuracy": 0.8146,
+        "test_macro_f1": 0.3242,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7918,
+        "total_seconds": 664.41
+      },
+      "43": {
+        "selected_round": 3,
+        "test_accuracy": 0.8419,
+        "test_macro_f1": 0.3518,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.8093,
+        "total_seconds": 659.51
+      },
+      "44": {
+        "selected_round": 3,
+        "test_accuracy": 0.837,
+        "test_macro_f1": 0.2781,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7993,
+        "total_seconds": 451.58
+      },
+      "45": {
+        "selected_round": 39,
+        "test_accuracy": 0.7605,
+        "test_macro_f1": 0.2883,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.759,
+        "total_seconds": 374.17
+      },
+      "46": {
+        "selected_round": 3,
+        "test_accuracy": 0.7766,
+        "test_macro_f1": 0.2969,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7692,
+        "total_seconds": 373.37
+      }
+    }
+  },
+  "phase5_f3_fedavg_severe": {
+    "method": "fedavg",
+    "partition": "Dirichlet alpha=0.1 over record groups",
+    "partition_sha256": "da8b96fa118e53bf53bee50b4f56bb6c281c65093b3c690058664f7b0cf8bbd4",
+    "status": "complete",
+    "seeds": {
+      "42": {
+        "selected_round": 2,
+        "test_accuracy": 0.8728,
+        "test_macro_f1": 0.3993,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.8306,
+        "total_seconds": 444.17
+      },
+      "43": {
+        "selected_round": 44,
+        "test_accuracy": 0.8478,
+        "test_macro_f1": 0.3582,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.8133,
+        "total_seconds": 444.86
+      },
+      "44": {
+        "selected_round": 2,
+        "test_accuracy": 0.7878,
+        "test_macro_f1": 0.3037,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7758,
+        "total_seconds": 470.63
+      },
+      "45": {
+        "selected_round": 24,
+        "test_accuracy": 0.877,
+        "test_macro_f1": 0.4074,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.8337,
+        "total_seconds": 453.29
+      },
+      "46": {
+        "selected_round": 2,
+        "test_accuracy": 0.8763,
+        "test_macro_f1": 0.4073,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.8331,
+        "total_seconds": 451.29
+      }
+    },
+    "note": "Started on Colab but not completed; Colab compute units were exhausted."
+  },
+  "phase5_f4_fedprox_severe": {
+    "method": "fedprox",
+    "partition": "Dirichlet alpha=0.1 over record groups",
+    "partition_sha256": "da8b96fa118e53bf53bee50b4f56bb6c281c65093b3c690058664f7b0cf8bbd4",
+    "status": "complete",
+    "seeds": {
+      "42": {
+        "selected_round": 3,
+        "test_accuracy": 0.7599,
+        "test_macro_f1": 0.2876,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7592,
+        "total_seconds": 512.18
+      },
+      "43": {
+        "selected_round": 3,
+        "test_accuracy": 0.8538,
+        "test_macro_f1": 0.3673,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.8172,
+        "total_seconds": 507.4
+      },
+      "44": {
+        "selected_round": 3,
+        "test_accuracy": 0.8053,
+        "test_macro_f1": 0.316,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7864,
+        "total_seconds": 509.83
+      },
+      "45": {
+        "selected_round": 3,
+        "test_accuracy": 0.8726,
+        "test_macro_f1": 0.4001,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.8303,
+        "total_seconds": 512.21
+      },
+      "46": {
+        "selected_round": 2,
+        "test_accuracy": 0.815,
+        "test_macro_f1": 0.324,
+        "s_recall": 0.0,
+        "test_weighted_f1": 0.7924,
+        "total_seconds": 505.72
+      }
+    }
+  },
+  "phase5_f5_fedprox_moderate": {
+    "method": "fedprox",
+    "partition": "Dirichlet alpha=0.5 over record groups",
+    "partition_sha256": "c447d732cb9e886b87db10b50bec8ec3df9944458198162f920b8966413a02d3",
+    "status": "not_run",
+    "seeds": {},
+    "note": "Not run by the pre-declared conditional rule: F4 showed no meaningful FedAvg-FedProx difference at matched rounds on F3 (see PHASE_5_RESULTS_AND_ANALYSIS.md)."
+  }
+}
