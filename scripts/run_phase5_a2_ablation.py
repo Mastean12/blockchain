@@ -83,8 +83,12 @@ def train_local(
     total, count = 0.0, 0
     for _ in range(local_epochs):
         for features, labels in loader:
-            features = features.unsqueeze(1).to(device, non_blocking=device.type == "cuda")
-            labels = labels.to(device, non_blocking=labels.device.type == "cuda")
+            # O1 (Tier 1): the non-blocking flag must describe the *destination* transfer.
+            # The previous form tested `labels.device.type == "cuda"`, which is the source tensor's
+            # device (always "cpu" here) and therefore always False, forcing a synchronous copy.
+            non_blocking = device.type == "cuda"
+            features = features.unsqueeze(1).to(device, non_blocking=non_blocking)
+            labels = labels.to(device, non_blocking=non_blocking)
             optimizer.zero_grad(set_to_none=True)
             loss = criterion(model(features), labels)
             if not torch.isfinite(loss):

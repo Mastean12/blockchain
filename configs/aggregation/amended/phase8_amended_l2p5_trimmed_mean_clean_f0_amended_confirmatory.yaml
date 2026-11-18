@@ -1,9 +1,10 @@
 schema_version: 1
-experiment_id: phase8_multi_krum_clean_f1_fresh
+experiment_id: phase8_amended_l2p5_trimmed_mean_clean_f0_amended_confirmatory
 phase: 8
-description: 'Phase 8 R1/R2: rule=multi_krum, condition=clean, malicious=1, seeds=fresh
-  (49-53), confirmatory.'
-protocol_document: docs/PHASE_8_ADVERSARY_MODEL.md
+description: 'Amended protocol 3B (reduced-lambda sensitivity): rule=trimmed_mean,
+  condition=clean, malicious=0, lambda=2.5, role=amended_confirmatory, seeds=[56,
+  57, 58, 59, 60]. Separate from the original protocol.'
+protocol_document: docs/PHASE_8_PROTOCOL_AMENDMENT_PROPOSAL.md
 expected_split_manifest_sha256: bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96
 expected_client_manifest_sha256: 71dbcac37e2a605d5edcd0ce280acec60068a1f1defb4f403bc32a5e1cb8eba3
 class_order:
@@ -42,18 +43,21 @@ partition:
   manifest_path: data/splits/phase5/phase5_f3_severe.json
   manifest_sha256: da8b96fa118e53bf53bee50b4f56bb6c281c65093b3c690058664f7b0cf8bbd4
 aggregation:
-  rule: multi_krum
-  byzantine_clients: 1
+  rule: trimmed_mean
+  byzantine_clients: 0
   condition: clean
-  scale: 5.0
+  scale: 2.5
   rejection_policy:
     enabled: true
     max_norm_ratio: 3.0
 phase8:
-  seed_role: fresh
-  seeds:
-  - 47
-  - 48
+  seed_role: amended_confirmatory
+  seeds: &id001
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
   thresholds:
     attack_success_macro_f1_drop: 0.05
     honest_false_positive_rate_max: 0.1
@@ -62,6 +66,12 @@ phase8:
     status: approved
     approved_on: '2026-11-16'
     document: docs/PHASE_8_ADVERSARY_MODEL.md
+  amendment:
+    intervention: 3B_reduced_lambda
+    lambda: 2.5
+    original_lambda: 5.0
+    gate: G8-amended
+    note: Sensitivity analysis only. Does not revise G8 or any frozen threshold.
 federated:
   method: fedavg
   proximal_mu: null
@@ -106,12 +116,7 @@ training:
     patience: 8
     evaluate_epoch_zero: true
     tie_policy: keep_earliest_epoch
-  seeds:
-  - 49
-  - 50
-  - 51
-  - 52
-  - 53
+  seeds: *id001
   deterministic_algorithms: true
 metrics:
   absent_class_policy: not_estimable

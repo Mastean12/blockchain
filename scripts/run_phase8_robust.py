@@ -49,11 +49,18 @@ CONFIG_DIR = PROJECT_ROOT / "configs" / "aggregation"
 
 DEVELOPMENT_SEEDS = (47, 48)
 FRESH_SEEDS = (49, 50, 51, 52, 53)
+# Amended protocol (see PHASE_8_PROTOCOL_AMENDMENT_PROPOSAL.md). These sets are disjoint from the
+# original seeds, so an amended result can never be confused with an original confirmatory result.
+AMENDED_DEVELOPMENT_SEEDS = (54, 55)
+AMENDED_CONFIRMATORY_SEEDS = (56, 57, 58, 59, 60)
 # Set to True only by the research lead, after thresholds are frozen on development seeds.
 # Set 16 November 2026 following PHASE_8_THRESHOLD_VALIDATION.md: the frozen thresholds were
 # exercised across 29 cells and 58 development-seed runs and found to discriminate correctly.
 # No threshold value was altered after observing those results.
 THRESHOLDS_FROZEN = True
+# Set 17 November 2026 after approving amendment proposal A8-2 (intervention 3B). Gates the amended
+# confirmatory seeds only; it does not affect the original fresh-seed gate above.
+AMENDED_THRESHOLDS_FROZEN = True
 
 
 class Phase8Error(RuntimeError):
@@ -87,8 +94,31 @@ def load_phase8_config(path: Path) -> dict[str, Any]:
             )
         if any(seed not in FRESH_SEEDS for seed in seeds):
             raise Phase8Error(f"Fresh configs may only use seeds {FRESH_SEEDS}")
+    elif role == "amended_development":
+        if any(seed not in AMENDED_DEVELOPMENT_SEEDS for seed in seeds):
+            raise Phase8Error(
+                f"Amended development configs may only use seeds {AMENDED_DEVELOPMENT_SEEDS}"
+            )
+    elif role == "amended_confirmatory":
+        if not AMENDED_THRESHOLDS_FROZEN:
+            raise Phase8Error(
+                "Amended confirmatory config refused: amended thresholds are not frozen."
+            )
+        if any(seed not in AMENDED_CONFIRMATORY_SEEDS for seed in seeds):
+            raise Phase8Error(
+                f"Amended confirmatory configs may only use seeds {AMENDED_CONFIRMATORY_SEEDS}"
+            )
+        # A confirmatory config must never carry an original or development seed.
+        forbidden = set(DEVELOPMENT_SEEDS) | set(FRESH_SEEDS) | set(AMENDED_DEVELOPMENT_SEEDS)
+        if set(seeds) & forbidden:
+            raise Phase8Error(
+                "Amended confirmatory seeds must be disjoint from every original seed set"
+            )
     else:
-        raise Phase8Error("Config must declare phase8.seed_role as development or fresh")
+        raise Phase8Error(
+            "Config must declare phase8.seed_role as development, fresh, "
+            "amended_development or amended_confirmatory"
+        )
     return document
 
 
@@ -154,18 +184,25 @@ def run_cell(
             participants = select_participants(client_ids, round_index, fraction, seed)
 
             updates: dict[str, torch.Tensor] = {}
+            # O3 (Tier 1): `global_state` is immutable for the whole client loop — it is only
+            # reassigned after every client has trained — so its float64 flattening is computed
+            # once here instead of once per client. Same values, one third of the work.
+            _baseline_flat = torch.cat([
+                global_state[key].to(torch.float64).reshape(-1)
+                for key in global_state
+                if torch.is_floating_point(global_state[key])
+            ])
             for client_id in participants:
                 result = train_local(
                     global_state, config, client_splits[client_id], local_epochs, device,
                     seed=seed * 1000 + round_index * 10 + client_ids.index(client_id),
                 )
                 local = result["state"]
-                baseline = global_state
                 delta = torch.cat([
-                    (local[key].to(torch.float64) - baseline[key].to(torch.float64)).reshape(-1)
-                    for key in baseline
-                    if torch.is_floating_point(baseline[key])
-                ])
+                    local[key].to(torch.float64).reshape(-1)
+                    for key in local
+                    if torch.is_floating_point(local[key])
+                ]) - _baseline_flat
                 updates[client_id] = delta
 
             updates = adversarial_updates(updates, malicious, condition, scale=scale, seed=seed)
