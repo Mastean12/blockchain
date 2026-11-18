@@ -1,211 +1,187 @@
-# ECG Federated Learning Research Project
+# A Blockchain-Enabled Privacy-Preserving Federated Learning Framework for ECG Arrhythmia Classification
 
-This project follows the research execution plan in `MASTER_RESEARCH_EXECUTION_SPECIFICATION.md`.
+Research implementation of a federated learning framework for ECG arrhythmia classification under an
+AAMI-derived five-class taxonomy (N/S/V/F/Q), with differential privacy, homomorphic encryption, a
+hash-chained audit layer, and robust-aggregation evaluation.
 
-Phases 0–7 have been executed. Phase 4 and Phase 5 results are frozen; G4 passed on 16 November 2026 with the S-class
-defect documented as an accepted limitation (S recall 0.000); G5 passed on 16 November 2026 after a controlled ablation identified the mechanism behind the F3 result. Phase 6 (differential privacy, homomorphic encryption and their
-combination) is complete and G6 passed on 16 November 2026 with documented scope limits. Phase 7 (blockchain audit)
-is complete and G7 passed on 16 November 2026, scoped to a Level 1 hash-chained audit log and a Level 2 single-node
-Ganache prototype — not a distributed blockchain. Phase 8 has not started.
+**All ten phases have been executed. Six of seven stop/go gates passed; G8 (robustness) did not.**
 
-## Project objective
+---
 
-A Blockchain-Enabled Privacy-Preserving Federated Learning Framework for ECG Arrhythmia Classification under an AAMI-derived five-class taxonomy.
+## Headline results
 
-## Governance
+| RQ | Question | Outcome |
+|---|---|---|
+| **RQ1** | Centralized baseline performance and limits | Centralized test accuracy **0.8423 ± 0.0383**, macro-F1 **0.2947 ± 0.0495** — but **class S recall is 0.000 in every condition** |
+| **RQ2** | Federated learning under heterogeneity | FedAvg severe **0.8523 / 0.3752**; FedProx indistinguishable at matched rounds. **54 % of the F3-over-F1 advantage is aggregation weight dispersion**, 46 % partition composition |
+| **RQ3** | Privacy mechanisms | **HE is functionally lossless** (macro-F1 0.3681 vs 0.3752, error 1.4e-07) at 20.5× communication. **Whole-model client-level DP destroys the classifier** — no defensible operating point found |
+| **RQ4** | Auditability and cost | Tamper-evident audit at **0.12 %** overhead (hash chain) or **4.03 %** (contract) with **bit-identical metrics** |
+| **RQ5** | Robust aggregation | **GATE FAILED.** 51.7 % of runs diverged; 15 of 29 cells unmeasurable; divergence is rule-dependent, not attack-strength-dependent |
 
-- The authoritative specification is `MASTER_RESEARCH_EXECUTION_SPECIFICATION.md`.
-- All project changes must align with the stop/go gates and execution order in that document.
-- The approved Phase 2 mapping and Phase 3 data manifests are frozen. Model training and evaluation remain governed by the Phase 4 gate and subsequent experiment approvals.
+---
+
+## Gate status
+
+| Gate | Status | Scope limit |
+|---|---|---|
+| G0–G3 | **Passed** | Frozen split and manifests |
+| G4 | **Passed** | With documented S-class defect |
+| G5 | **Passed** | K = 5; one partition draw |
+| G6 | **Passed** | Client-level DP; approved σ grid not run |
+| G7 | **Passed** | L1 hash chain + L2 single-node EVM only |
+| **G8** | **NOT PASSED** | 51.7 % of matrix unmeasurable |
+| G9 | **Passed** | Eligible component set |
+| G10 | **Passed** | With declared gaps |
+
+---
+
+## What was actually built
+
+### Data and baselines (Phases 0–4)
+
+- MIT-BIH Arrhythmia Database v1.0.0, 705 files verified against SHA-256 manifest.
+- AAMI-derived five-class mapping; **record-independent** split (no record appears in more than one
+  split), frozen as `bbcfa25c…`.
+- 100,694 windows of 253 samples; training-only z-score normalisation.
+- Compact 1-D CNN, **36,357 trainable parameters**.
+- 30 baseline fits (centralized + local-only + two diagnostics), 5 seeds each.
+
+**Key finding:** the model never predicts class S. Investigated in
+`docs/PHASE_4_S_CLASS_FAILURE_INVESTIGATION.md`; two pre-registered ablations (selection rule, pooling
+architecture) both failed their criteria. Accepted as a documented limitation, not fixed.
+
+### Federated learning (Phase 5)
+
+- FedAvg and FedProx across three non-IID partitions (IID-like, α = 0.5, α = 0.1).
+- **G5 ablation A2** provided the project's strongest methodological result: replacing sample-count
+  weights with uniform weights restored macro-F1 from 0.3752 to 0.3364, attributing **54 %** of the
+  apparent non-IID benefit to aggregation weighting (one client held 37.1 % of the model).
+- Control reproduced frozen F3 **exactly on 5/5 seeds**.
+
+### Privacy (Phase 6)
+
+- **CKKS homomorphic encryption** (N = 8192, 9 ciphertexts): functionally lossless, 1.4e-07 error,
+  20.5× communication expansion.
+- **Differential privacy**: full pipeline with a validated RDP accountant, per-client clipping, and
+  frozen sensitivity. The result is **negative** — noise scales as `σ√d` with d = 36,357, giving
+  47–377× noise-to-signal at the approved σ. No σ exists where both utility and privacy hold.
+- DP+HE reports **exactly** the DP-only ε, confirming HE adds confidentiality and not differential
+  privacy.
+
+### Audit layer (Phase 7)
+
+- **L1**: SHA-256 hash-chained append-only log. Detects interior alteration, deletion and reordering
+  **at the exact index**. Truncation requires an external anchor — documented and tested.
+- **L2**: single-node Ganache smart contract. Rejects unauthorised writers and replayed submissions.
+- **44 personal-information tests** enforce a closed-whitelist schema: no waveform data, identifiers,
+  tensors, keys, seeds, or per-client privacy diagnostics can reach a ledger.
+- Metrics **bit-identical** across audited and unaudited runs.
+
+> This is a Level 1 hash chain and a Level 2 local prototype. **It is not a distributed blockchain**
+> and no consensus, decentralisation or Byzantine-resistance claim is made.
+
+### Robust aggregation (Phase 8) — gate failed
+
+- Pre-registered adversary model, baseline justification against K = 5, and frozen thresholds.
+- 145 confirmatory runs: **75 (51.7 %) diverged**, leaving **15 of 29 cells unmeasurable**.
+- Root cause established: divergence is **rule-dependent, not attack-strength-dependent** —
+  identical counts at λ = 1.5, 2.5 and 5.0, and identical rule-by-rule (median 0 divergences,
+  FedAvg 12/14, Krum/Multi-Krum 6/8).
+- Norm-based detection is **blind to sign-flip** (0.00–0.12) while perfect on scaling (1.00).
+- **R2 is not claimed.** The amended reduced-λ hypothesis (3B) was refuted; proposals 3A and 3C were
+  never implemented.
+
+### Integration and finalisation (Phases 9–10)
+
+- Integration composes only components whose gates passed. **Robust aggregation is excluded by code
+  guard**, not merely by documentation.
+- Six of eight selected configurations **reproduced recorded results exactly** on re-evaluation.
+- Clean-environment reproduction from a pinned lockfile verified.
+
+---
+
+## Honest scope statement
+
+**This project reports four negative findings alongside its positives**, and they are findings, not
+failures of execution:
+
+1. **The model never learns class S** — an architectural and validation-support limitation.
+2. **Whole-model client-level DP is not viable** at five clients with a 36k-parameter model.
+3. **Robust aggregation is not deployable** at K = 5 — most rules diverge by arithmetic.
+4. **Norm-based poisoning detection cannot see sign-flip attacks.**
+
+No clinical, deployment, or production-security claim is made anywhere in this work.
+See `docs/FINAL_RESEARCH_SUBMISSION_AUDIT.md` for the full claim-by-claim review.
+
+---
 
 ## Repository layout
 
 ```text
 project-root/
-├── MASTER_RESEARCH_EXECUTION_SPECIFICATION.md
+├── MASTER_RESEARCH_EXECUTION_SPECIFICATION.md   # authoritative specification
 ├── README.md
 ├── pyproject.toml
-├── requirements-lock.txt
-├── .gitignore
+├── requirements-lock.txt                        # pinned, clean-venv verified
 ├── configs/
-├── data/
+│   ├── models/                                  # frozen Phase 4 recipe + diagnostics
+│   ├── federated/                               # F1–F5
+│   ├── privacy/                                 # P1-ctl, P1-a..d, P2, P3-a/b
+│   └── aggregation/                             # Phase 8 matrix (+ amended 3B)
+├── contracts/AuditLog.sol                       # Level 2 audit contract
 ├── src/
-├── tests/
-├── experiments/
-├── results/
-├── docs/
-├── scripts/
-└── .venv/                  # Local virtual environment, not tracked
+│   ├── data/            # Phase 3 pipeline, canonical hashing
+│   ├── models/          # CompactECGCNN (+ A1 pooling ablation)
+│   ├── training/        # Phase 4 training/evaluation/metrics
+│   ├── federated/       # FedAvg/FedProx round loop
+│   ├── privacy/         # clipping, DP mechanism, CKKS, calibration
+│   ├── blockchain/      # schema, commitments, ledger, EVM adapter
+│   ├── aggregation/     # robust rules, attacks, defence accounting
+│   └── integration/     # Phase 9 composition layer
+├── scripts/             # one CLI per phase
+├── tests/               # 198 tests
+├── experiments/logs/    # per-run artefacts (git-ignored)
+├── archive/             # Phase 10 defence package
+└── docs/                # phase reports, audits, threat models
 ```
 
-## Local setup
+---
+
+## Setup
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements-lock.txt
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt `
+    --extra-index-url https://download.pytorch.org/whl/cu126
+.\.venv\Scripts\python.exe -m pytest tests -q
 ```
 
-## Google Colab workflow
+Expected: **198 passed, 16 skipped**. The 16 skips are 15 Ganache contract tests (node not running)
+plus one CPU-only test.
 
-This project is designed to run in a Google Colab runtime with a dedicated GPU. Use the repository as a mounted working directory. Check the existing CUDA-enabled PyTorch runtime before installing packages; do not blindly replace Colab's GPU build of PyTorch.
+Data is not tracked. See `docs/reproducibility/REPRODUCIBILITY.md` for download, checksum
+verification and regeneration commands.
 
-```python
-# Example Colab setup from the project root
-!python --version
-!nvidia-smi
-!python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
-```
+---
 
-For a drive-mounted repo:
+## Documentation map
 
-```python
-from google.colab import drive
-drive.mount('/content/drive')
-# then work from /content/drive/MyDrive/.../blockchain
-```
-
-Run the approved Phase 4 CNN smoke test first, then the full five-seed baseline sweep:
-
-```python
-!python -m scripts.run_phase4_baselines --smoke-test --device cuda
-!python -m scripts.run_phase4_baselines --device cuda
-```
-
-The full command runs five centralized and 25 local-only fits. It refuses to overwrite an existing output directory and does not fall back to CPU if CUDA is unavailable. See [Phase 4 baseline protocol](docs/PHASE4_BASELINE_PROTOCOL.md) and [the approved config](configs/models/phase4_cnn_v1.yaml).
-
-## Data setup (required before running anything)
-
-Raw MIT-BIH files and processed arrays are **not** in this repository. `.gitignore` excludes
-`data/raw/`, `data/processed/` and all `.npy` files. A fresh clone therefore has code, configs,
-documentation and frozen *manifests* only.
-
-To make a clone runnable:
-
-1. Download the MIT-BIH Arrhythmia Database v1.0.0 into `data/raw/mit-bih-arrhythmia-database-1.0.0/`.
-   Verify it against `docs/data_and_labels/MITBIH_v1.0.0_SHA256SUMS.csv`.
-2. Rebuild the frozen split and processed arrays (deterministic, seed 42):
-
-   ```powershell
-   .\.venv\Scripts\python.exe -m scripts.preprocess_mitdb_phase3
-   ```
-
-   This must reproduce the frozen hashes
-   `bbcfa25c7f0e0d903a6de44ccbaa6eb3fa0716253ff1ea730c912f99534d6f96` (split) and
-   `71dbcac37e2a605d5edcd0ce280acec60068a1f1defb4f403bc32a5e1cb8eba3` (clients).
-   The loader refuses to train if they differ.
-3. Rebuild the Phase 5 partitions (deterministic; refuses to overwrite differing content):
-
-   ```powershell
-   .\.venv\Scripts\python.exe -m scripts.build_phase5_partitions
-   ```
-
-Alternatively, copy `data/processed/phase3/` and `data/raw/` from an existing machine.
-
-## Running the experiments locally on a GPU
-
-Both experiment families are plain CLI entry points and do not require Colab.
-
-```powershell
-# Phase 4 baselines (30 fits: 5 centralized + 25 local-only)
-.\.venv\Scripts\python.exe -m scripts.run_phase4_baselines --device cuda
-
-# Phase 4 diagnostics
-.\.venv\Scripts\python.exe -m scripts.run_phase4_diagnostics `
-    --experiment phase4_diag_d1_class_weighted --device cuda
-
-# Phase 5 federated conditions
-.\.venv\Scripts\python.exe -m scripts.run_phase5_federated `
-    --experiment phase5_f3_fedavg_severe `
-    --output-dir experiments/logs/phase5/phase5_f3_fedavg_severe/manual --device cuda
-```
-
-Both refuse to run on a device they cannot use (no silent CPU fallback), refuse to overwrite an
-existing output directory, and support resume. `--seed N` runs a single seed.
-
-Approved Phase 5 hyperparameters, already recorded in every config: 50 rounds, 2 local epochs,
-all five clients each round, FedProx `proximal_mu` 0.01, BatchNorm buffers aggregated weighted
-by sample count, optimizer state reset each round.
-
-Run cost: measured 98 s/round on CPU for five clients. On a consumer GPU expect roughly
-20â€“50x faster. One condition (5 seeds x 51 rounds) is the unit of work.
-
-## Validation
-
-Run focused validation with:
-
-```powershell
-.\.venv\Scripts\python.exe -m pytest tests
-.\.venv\Scripts\python.exe -m scripts.create_phase3_splits
-.\.venv\Scripts\python.exe -m scripts.preprocess_mitdb_phase3
-```
-
-These commands validate the mapping, regenerate the deterministic split, and rebuild the processed arrays. They do not train a model.
-
-## Current status
-
-Status: **Phases 0–7 executed.**
-
-| Phase | State |
-|---|---|
-| 0–3 | Complete. G3 passed. Split and preprocessing manifests frozen and unchanged. |
-| 4 | Executed in full (30 fits), artefacts recovered and reproduced. **G4 PASSED 16 Nov 2026 with documented defect** — S recall 0.000; two ablations attempted and rejected. |
-| 5 | F1–F4 complete (5 seeds each). F5 not run by the pre-declared rule. **G5 PASSED 16 Nov 2026** — ablation A2 attributed 54% of the F3 advantage to aggregation weighting. |
-| 6 | DP, HE and HE+DP executed and measured (5 seeds each). **G6 passed 16 Nov 2026 with documented scope limits.** |
-| 7 | Audit layer (hash chain L1 + Ganache contract L2) implemented and measured. **G7 PASSED 16 Nov 2026** (scope: L1/L2 only). |
-| 8–10 | Not started. |
-
-**Phase 6 headline:** HE is functionally lossless (macro-F1 0.3681 vs 0.3752 plaintext) at 20.5×
-communication cost. Whole-model client-level DP destroys this classifier at every tested
-configuration; the DP arm is recorded as a documented negative result. See
-[Phase 6 results](docs/PHASE_6_RESULTS_AND_ANALYSIS.md).
-
-Important Phase 3 limitation: Q is absent from validation and F is absent from test. Those class-specific metrics are not estimable for the affected partitions; the split was not redrawn to improve metrics.
-
-Project documents:
-- [Literature review](docs/literature/LITERATURE_REVIEW.md)
-- [Reference register](docs/literature/REFERENCES.md)
-- [Approved research protocol](docs/protocol/RESEARCH_PROTOCOL.md)
-- [MIT-BIH provenance](docs/data_and_labels/DATA_PROVENANCE.md)
-- [AAMI mapping and approval report](docs/data_and_labels/AAMI_MAPPING_AND_EXCLUSIONS.md)
-- [Approved mapping configuration](configs/data/aami5_mapping_v1.yaml)
-- [Phase 3 split policy and preprocessing audit](docs/data_and_labels/SPLIT_POLICY.md)
-- [Frozen split manifest](data/splits/phase3_split_manifest.json)
-- [Training-client manifest](data/splits/client_manifests.json)
-- [Preprocessing audit report](docs/data_and_labels/PHASE3_PREPROCESSING_AUDIT.json)
-- [Phase 3 final split evaluation](docs/PHASE_3_FINAL_EVALUATION.md)
-- [Phase 4 baseline protocol](docs/PHASE4_BASELINE_PROTOCOL.md)
-- [Phase 4 G4 resolution](docs/PHASE_4_G4_RESOLUTION.md)
-- [Phase 5 G5 diagnosis](docs/PHASE_5_G5_DIAGNOSIS.md)
-- [Approved Phase 4 CNN config](configs/models/phase4_cnn_v1.yaml)
-- [Phase 4 execution status](docs/PHASE4_EXECUTION_STATUS.md)
-- [Phase 4 diagnostic ablation protocol](docs/PHASE_4_DIAGNOSTIC_ABLATION.md)
-- [Phase 4 diagnostic ablation results](docs/PHASE4_DIAGNOSTIC_ABLATION_RESULTS.md)
-- [Phase 4 S-class failure investigation](docs/PHASE_4_S_CLASS_FAILURE_INVESTIGATION.md)
-- [Phase 5 implementation plan](docs/PHASE_5_IMPLEMENTATION_PLAN.md)
-- [Phase 5 execution status](docs/PHASE_5_EXECUTION_STATUS.md)
-- [Phase 5 manifest audit](docs/PHASE_5_MANIFEST_AUDIT.md)
-- [Phase 5 results and analysis](docs/PHASE_5_RESULTS_AND_ANALYSIS.md)
-- [Phase 5 results snapshot](docs/phase5_results/phase5_results.json)
-- [Phase 6 implementation plan](docs/PHASE_6_IMPLEMENTATION_PLAN.md)
-- [Phase 6 privacy threat model](docs/PHASE_6_PRIVACY_THREAT_MODEL.md)
-- [Phase 6 privacy mathematics](docs/PHASE_6_PRIVACY_MATHEMATICS.md)
-- [Phase 6 experiment matrix](docs/PHASE_6_EXPERIMENT_MATRIX.md)
-- [Phase 6 calibration report](docs/PHASE_6_CALIBRATION_REPORT.md)
-- [Phase 6 DP frontier diagnostic](docs/PHASE_6_DP_FRONTIER_DIAGNOSTIC.md)
-- [Phase 6 results and analysis](docs/PHASE_6_RESULTS_AND_ANALYSIS.md)
-- [Phase 6 execution status](docs/PHASE_6_EXECUTION_STATUS.md)
-- [Phase 7 readiness report](docs/PHASE_7_READINESS_REPORT.md)
-- [Phase 7 results and analysis](docs/PHASE_7_RESULTS_AND_ANALYSIS.md)
-- [Phase 7 execution status](docs/PHASE_7_EXECUTION_STATUS.md)
-- [Security threat model](docs/threat_model/SECURITY_THREAT_MODEL.md)
-- [Privacy threat model (canonical)](docs/PHASE_6_PRIVACY_THREAT_MODEL.md)
-- [Phase 6 privacy configs](configs/privacy/)
-- [Experiment registry](docs/methodology/EXPERIMENT_REGISTRY.md)
-- [Results and analysis index](docs/methodology/RESULTS_AND_ANALYSIS.md)
+**Using this work:**
+- [Research question evidence matrix](docs/RESEARCH_QUESTION_EVIDENCE_MATRIX.md) — start here
+- [Final results tables](docs/PHASE_10_FINAL_RESULTS_TABLES.md)
+- [Submission audit](docs/FINAL_RESEARCH_SUBMISSION_AUDIT.md)
 - [Limitations](docs/limitations/LIMITATIONS.md)
 - [Reproducibility](docs/reproducibility/REPRODUCIBILITY.md)
-- [New machine runbook](docs/NEW_MACHINE_RUNBOOK.md)
-- [Federated configs](configs/federated/)
-- [Phase 5 frozen partitions](data/splits/phase5/)
+
+**By phase:**
+- [G4 resolution](docs/PHASE_4_G4_RESOLUTION.md) · [S-class investigation](docs/PHASE_4_S_CLASS_FAILURE_INVESTIGATION.md)
+- [Phase 5 results](docs/PHASE_5_RESULTS_AND_ANALYSIS.md) · [G5 diagnosis](docs/PHASE_5_G5_DIAGNOSIS.md)
+- [Phase 6 results](docs/PHASE_6_RESULTS_AND_ANALYSIS.md) · [DP frontier](docs/PHASE_6_DP_FRONTIER_DIAGNOSTIC.md) · [Threat model](docs/PHASE_6_PRIVACY_THREAT_MODEL.md)
+- [Phase 7 results](docs/PHASE_7_RESULTS_AND_ANALYSIS.md) · [Readiness](docs/PHASE_7_READINESS_REPORT.md) · [Security model](docs/threat_model/SECURITY_THREAT_MODEL.md)
+- [Phase 8 confirmatory](docs/PHASE_8_CONFIRMATORY_REPORT.md) · [Failure analysis](docs/PHASE_8_FAILURE_ANALYSIS.md) · [Amendment proposal](docs/PHASE_8_PROTOCOL_AMENDMENT_PROPOSAL.md) · [3B results](docs/PHASE_8_AMENDED_3B_RESULTS.md)
+- [Phase 9 integration](docs/PHASE_9_INTEGRATION_RESULTS.md) · [Combined threat model](docs/PHASE_9_COMBINED_THREAT_MODEL.md)
+- [Phase 10 plan](docs/PHASE_10_FINAL_EVALUATION_PLAN.md) · [Execution status](docs/PHASE_10_EXECUTION_STATUS.md)
+- [Experiment registry](docs/methodology/EXPERIMENT_REGISTRY.md)
+
+**Governance:** the authoritative document is `MASTER_RESEARCH_EXECUTION_SPECIFICATION.md`. Every
+number in this repository traces to a frozen artefact and a recorded gate decision.

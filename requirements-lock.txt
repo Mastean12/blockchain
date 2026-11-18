@@ -69,3 +69,31 @@ typing_extensions==4.16.0
 tzdata==2026.6
 urllib3==2.8.0
 yarl==1.25.1
+
+# Blockchain audit (Phase 7) - required by tests/test_phase7_contract.py
+# These were installed during Phase 7 but were absent from the lockfile until Phase 10,
+# which made the contract tests error rather than skip in a clean environment.
+web3==7.16.0
+eth-abi==6.0.0
+eth-account==0.13.7
+eth-hash==0.8.0
+eth-keyfile==0.8.1
+eth-keys==0.8.0
+eth-rlp==3.0.0
+eth-typing==6.0.0
+eth-utils==6.0.0
+hexbytes==2.0.0
+ckzg==2.1.8
+bitarray==3.12.4
+cytoolz==1.2.0
+toolz==1.2.0
+parsimonious==0.10.0
+pycryptodome==3.24.1
+pyunormalize==18.0.0
+pydantic==2.14.3
+pydantic_core==2.50.4
+typing-inspection==0.4.5
+regex==2026.11.15
+types-requests==2.33.0.20261030
+pywin32==312
+websockets==15.0.1

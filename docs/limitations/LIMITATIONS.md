@@ -83,6 +83,19 @@ Known limits of the study. Each must be carried into the thesis; none may be sil
 
 ## Governance
 
-36. **G5 is undecided**; G6 passed with the scope limits recorded in `PHASE_6_RESULTS_AND_ANALYSIS.md` §8.1.
-37. **Phases 7–10 have no results.** Blockchain audit, robust aggregation, integration and the
-   defence package are not started.
+36. **G5 — resolved 16 November 2026, status corrected.** This item previously read "G5 is
+    undecided". G5 is in fact **passed**: the explanatory ablation required by the specification
+    (A2, uniform vs sample-count aggregation) was executed on F3 and F2 with five seeds each, with a
+    control reproducing the frozen F3 results exactly on 5/5 seeds. It attributed 54 % of the
+    F3-over-F1 macro-F1 advantage to aggregation weight dispersion and 46 % to partition composition.
+    See `PHASE_5_G5_DIAGNOSIS.md`. The original wording was a staleness defect, retained here in
+    meaning: the claim "G5 is undecided" was never true after 16 November 2026.
+37. **Phases 7–10 — status corrected 16 November 2026.** This item previously read "Phases 7–10
+    have no results… not started". Phase 7 (blockchain audit) now **has results** and **G7 passed**
+    on 16 November 2026, scoped strictly to a Level 1 hash-chained audit log and a Level 2
+    single-node Ganache prototype — not a distributed blockchain, with no consensus claim. Phase 8
+    (robust aggregation) has an approved adversary model, implementation, threshold validation on
+    development seeds, and **READY** status; its confirmatory fresh-seed execution is the current
+    work. Phases 9 (integration) and 10 (defence package) have **no results and are not started**.
+    See `PHASE_7_RESULTS_AND_ANALYSIS.md`, `PHASE_8_READINESS_AUDIT.md` §10 and
+    `PHASE_8_THRESHOLD_VALIDATION.md`.
