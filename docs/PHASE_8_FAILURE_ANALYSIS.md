@@ -2,7 +2,7 @@
 
 **Date:** 17 November 2026
 **Status:** Analysis of the failed confirmatory gate. **G8 remains NOT PASSED.**
-**Scope:** diagnosis of the 40 divergent confirmatory runs using existing logs and recorded per-round
+**Scope:** diagnosis of the 75 divergent confirmatory runs using existing logs and recorded per-round
 metadata only. **No intervention was implemented, no configuration changed, no run executed, no
 frozen artefact touched.**
 

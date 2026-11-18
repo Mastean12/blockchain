@@ -53,7 +53,7 @@ of an earlier generator and were removed before any confirmatory run. No approve
 |---|---|
 | Runs executed | 145 (29 cells × 5 seeds) |
 | Execution failures | 0 |
-| Runs that diverged | **40 (27.6 %)** |
+| Runs that diverged | **75 (51.7 %)** — corrected 18 Nov 2026 |
 | Cells fully evaluable | **14 of 29** |
 | Cells unmeasurable | **15 of 29** (all 5 seeds diverged) |
 
@@ -133,7 +133,7 @@ reclassifies an original cell, or changes a frozen threshold.
 
 ### 5.2 Root cause established from existing logs
 
-The 40 divergent confirmatory runs resolve into three mechanisms, not one:
+The 75 divergent confirmatory runs resolve into three mechanisms, not one:
 
 | Mechanism | Runs | Cause supported by the evidence |
 |---|---:|---|
@@ -180,3 +180,36 @@ additive criteria. It does **not** replace the original protocol and does **not*
 - Original development results, confirmatory outputs, frozen thresholds and partitions untouched.
 - Development and confirmatory data are not pooled anywhere.
 - Round-zero metrics are classified as invalid for aggregation comparison throughout.
+
+---
+
+## 6. Amended proposal 3D — server step-size damping (18 November 2026)
+
+Following a request to make G8 pass, a further amendment was proposed and executed. It does **not**
+make G8 pass.
+
+**Evidence basis.** Every run that survived had norm(round 4)/norm(round 1) in [0.26, 0.40], while
+diverging runs averaged 1.73. This identifies a positive-feedback loop: large updates worsen the
+optimum, producing larger updates, until BatchNorm or the loss overflows.
+
+**Intervention.** A server step size applied after aggregation (pply_server_step), tested at 0.25
+and 0.5 with everything else unchanged including lambda = 5.0.
+
+**Result (development seeds 54-55, 116 runs, 0 failures):**
+
+| Step | Divergence | Cells measurable |
+|---|---:|---:|
+| baseline 1.0 | 51.7 % | 14 / 29 (48 %) |
+| 0.5 | 50.0 % | 14 / 29 (48 %) |
+| 0.25 | **36.2 %** | **18 / 29 (62 %)** |
+| criterion | — | >= 27 / 29 (93 %) |
+
+**Criterion NOT met.** Step 0.25 is a genuine improvement but well short of the target. Krum was
+completely unaffected at every step size, because damping reduces an update's magnitude but not its
+direction, and Krum's failure is a selection failure rather than an amplification one.
+
+**Decision.** The amended 3D confirmatory phase (seeds 56-60) was **not run**: the development result
+already falls far short of the pre-registered criterion, and spending ~10 h would not change the
+conclusion.
+
+**G8 remains NOT PASSED.** See PHASE_8_AMENDED_3D_PROPOSAL.md.

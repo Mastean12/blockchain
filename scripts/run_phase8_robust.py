@@ -30,7 +30,7 @@ from src.aggregation.defence import (
     apply_rejection_policy,
     summarise_accounting,
 )
-from src.aggregation.rules import check_admissible, get_rule
+from src.aggregation.rules import apply_server_step, check_admissible, get_rule
 from src.data.phase3_pipeline import CLASS_ORDER
 from src.federated.fedavg import _write_json, client_split, select_participants
 from src.federated.partitions import verify_partition_manifest
@@ -53,6 +53,7 @@ FRESH_SEEDS = (49, 50, 51, 52, 53)
 # original seeds, so an amended result can never be confused with an original confirmatory result.
 AMENDED_DEVELOPMENT_SEEDS = (54, 55)
 AMENDED_CONFIRMATORY_SEEDS = (56, 57, 58, 59, 60)
+AMENDED_3D_DEVELOPMENT_SEEDS = (54, 55)
 # Set to True only by the research lead, after thresholds are frozen on development seeds.
 # Set 16 November 2026 following PHASE_8_THRESHOLD_VALIDATION.md: the frozen thresholds were
 # exercised across 29 cells and 58 development-seed runs and found to discriminate correctly.
@@ -98,6 +99,31 @@ def load_phase8_config(path: Path) -> dict[str, Any]:
         if any(seed not in AMENDED_DEVELOPMENT_SEEDS for seed in seeds):
             raise Phase8Error(
                 f"Amended development configs may only use seeds {AMENDED_DEVELOPMENT_SEEDS}"
+            )
+    elif role == "amended_3d_development":
+        if any(seed not in AMENDED_3D_DEVELOPMENT_SEEDS for seed in seeds):
+            raise Phase8Error(
+                f"Amended 3D development configs may only use seeds "
+                f"{AMENDED_3D_DEVELOPMENT_SEEDS}"
+            )
+    elif role == "amended_3d_confirmatory":
+        if not AMENDED_THRESHOLDS_FROZEN:
+            raise Phase8Error(
+                "Amended 3D confirmatory config refused: thresholds are not frozen."
+            )
+        if any(seed not in AMENDED_CONFIRMATORY_SEEDS for seed in seeds):
+            raise Phase8Error(
+                f"Amended 3D confirmatory configs may only use seeds "
+                f"{AMENDED_CONFIRMATORY_SEEDS}"
+            )
+        forbidden = (
+            set(DEVELOPMENT_SEEDS)
+            | set(FRESH_SEEDS)
+            | set(AMENDED_3D_DEVELOPMENT_SEEDS)
+        )
+        if set(seeds) & forbidden:
+            raise Phase8Error(
+                "Amended 3D confirmatory seeds must be disjoint from every other seed set"
             )
     elif role == "amended_confirmatory":
         if not AMENDED_THRESHOLDS_FROZEN:
@@ -218,6 +244,10 @@ def run_cell(
                 [updates[client_id] for client_id in ordered],
                 [float(counts[client_id]) for client_id in ordered],
             )
+            # Proposal 3D: optional server step size. Defaults to 1.0, the identity, so every
+            # pre-existing configuration behaves exactly as before.
+            step_size = float(aggregation.get("step_size", 1.0))
+            aggregated = apply_server_step(aggregated, step_size)
 
             # Apply the aggregated delta to the global floating tensors; buffers stay as Phase 5.
             new_state = dict(global_state)

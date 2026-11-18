@@ -269,7 +269,7 @@ That is narrower than a robustness claim and must be reported that narrowly.
 
 Recorded, not concealed:
 
-1. **40 runs diverged (27.6 %)** and 15 cells are unmeasurable.
+1. **75 runs diverged (51.7 %)** and 15 cells are unmeasurable. (Corrected 18 Nov 2026: an earlier figure of 40 / 27.6 % counted round-0 selections rather than divergences.)
 2. **Round-0 fallback produced identical metrics across rules** in every diverged cell — an artefact
    that must never be tabulated as a rule comparison.
 3. **Sign-flip detection is effectively zero (0.00–0.12).** The norm heuristic cannot see it.

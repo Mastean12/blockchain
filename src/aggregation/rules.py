@@ -236,3 +236,29 @@ def check_admissible(name: str, byzantine: int) -> None:
             f"{name} supports at most f={spec.max_byzantine} Byzantine clients "
             f"({spec.assumption}); requested f={byzantine}"
         )
+
+
+# ---------------------------------------------------------------------------------------------
+# Server step size (Phase 8 amendment 3D)
+# ---------------------------------------------------------------------------------------------
+def apply_server_step(
+    aggregate: torch.Tensor, step_size: float
+) -> torch.Tensor:
+    """Scale an aggregated update by a server step size before applying it.
+
+    Proposal 3D. The Phase 8 failure analysis found that every run which survived had its
+    per-round update norm decay to below 40 % of round 1 by round 4, while runs that diverged
+    typically grew. A step size below 1 damps the round-to-round feedback that drives that growth.
+
+    This is a *server* operation: it changes how far the global model moves each round, not what
+    any aggregation rule computes. ``step_size=1.0`` reproduces the original behaviour exactly and
+    is the default, so existing results are unaffected.
+    """
+    if not (0.0 < float(step_size) <= 1.0):
+        raise AggregationError(
+            f"step_size must be in (0, 1]; got {step_size}. Values above 1 amplify updates "
+            "and are not part of this proposal."
+        )
+    if float(step_size) == 1.0:
+        return aggregate
+    return (aggregate.to(torch.float64) * float(step_size)).to(aggregate.dtype)
